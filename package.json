@@ -1,5 +1,5 @@
 {
-  "name": "kosirock",
+  "name": "kosirockMobile",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,16 +15,10 @@
     "babel-polyfill": "6.26.0",
     "history": "^4.7.2",
     "jquery": "3.2.1",
-    "js-cookie": "^2.2.0",
     "lodash": "4.17.4",
     "prop-types": "15.6.0",
-    "query-string": "^6.0.0",
     "react": "16.2.0",
-    "react-cookie": "^2.1.2",
-    "react-daum-postcode": "^1.4.2",
     "react-dom": "16.2.0",
-    "react-facebook-login": "^4.0.1",
-    "react-kakao-login": "^1.0.6",
     "react-places-autocomplete": "5.4.3",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
@@ -33,7 +27,6 @@
     "react-slick": "0.16.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "universal-cookie": "^2.1.2",
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {

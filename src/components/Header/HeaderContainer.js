@@ -7,7 +7,7 @@ class HeaderContainer extends Component {
         return (
             <div className="header_jh">
                 {isLogo && <img src="img/logo.png" align="absmiddle" width="105px" height="23px" style={{marginTop: '15px'}}/>}
-                <div class="header_jh_right">
+                <div className="header_jh_right">
                     <img src="img/search_btn.png" align="absmiddle" width="52px" height="52px"
                          ng-click="doShowModalSearchFilter()"/>
                 </div>

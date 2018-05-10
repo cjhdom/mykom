@@ -169,7 +169,7 @@ button, input[type="reset"], input[type="button"], input[type="submit"] {
     line-height:31px;
     z-index:10000;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .place_search_input {

@@ -40,22 +40,30 @@ class Address extends Component {
 
     render() {
         const styles = {
+            root: {
+                opacity: 1
+            },
             autocompleteContainer: {
-                position: 'absolute !important',
-                mozBoxSizing: 'border-box',
+                position: 'relative !important',
+                MozBoxSizing: 'border-box',
                 WebkitBoxSizing: 'border-box',
                 left: this.position.left + 'px',
                 width: this.position.width + 'px',
-                height: this.position.height + 'px',
-                backgroundColor: '#fff',
-                zIndex: '-1000',
+                backgroundColor: 'rgba(255, 255, 255)',
+                zIndex: '1000',
                 borderRadius: '2px',
                 borderTop: '1px solid #d9d9d9',
                 fontFamily: 'Arial, sans-serif',
-                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
                 boxSizing: 'border-box',
                 overflow: 'visible',
-                top: this.position.top + 'px',
+                marginTop: '-8px',
+                top: '-14px',
+                opacity: '1 !important'
+                // top: (this.position.top) + 'px',
+            },
+            input: {
+                height: '17px',
+                position: 'relative'
             }
         }
         const cssClasses = {

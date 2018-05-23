@@ -49,7 +49,7 @@ class Address extends Component {
                 WebkitBoxSizing: 'border-box',
                 left: this.position.left + 'px',
                 width: this.position.width + 'px',
-                backgroundColor: 'rgba(255, 255, 255)',
+                backgroundColor: 'rgba(255, 255, 255, 1)',
                 zIndex: '1000',
                 borderRadius: '2px',
                 borderTop: '1px solid #d9d9d9',

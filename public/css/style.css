@@ -160,12 +160,11 @@ button, input[type="reset"], input[type="button"], input[type="submit"] {
     width:70%;
     border-radius:4px;
     border:1px solid gray;
-    opacity:0.8;
     position:absolute;
     top:20px;
     left: 50%;
     margin-left: -35%;
-    background:white;
+    background: rgba(255, 255, 255, 0.8);
     line-height:31px;
     z-index:10000;
     box-sizing: border-box;

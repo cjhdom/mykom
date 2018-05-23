@@ -125,8 +125,7 @@ class Home extends Component {
             <Fragment>
                 <div style={getStyle(!isShowSearch)}>
                     <div className="header_jh">
-                        <img src="img/logo.png" align="absmiddle" width="105px" height="23px"
-                             style={{marginTop: '15px'}}/>
+                        <img src="img/logo.png" align="absmiddle" width="105px" height="23px"/>
                         <div className="header_jh_right">
                             <img src="img/search_btn.png" align="absmiddle" width="52px" height="52px"
                                  onClick={this.toggleSearch}/>

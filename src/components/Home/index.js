@@ -127,7 +127,7 @@ class Home extends Component {
                     <div className="header_jh">
                         <img src="img/logo.png" align="absmiddle" width="105px" height="23px"/>
                         <div className="header_jh_right">
-                            <img src="img/search_btn.png" align="absmiddle" width="52px" height="52px"
+                            <img src="img/search_btn.png" align="absmiddle" width="52px" height="52px" style={{marginTop: '-3px'}}
                                  onClick={this.toggleSearch}/>
                         </div>
                     </div>

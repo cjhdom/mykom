@@ -24,6 +24,14 @@ class MapContainer extends Component {
         this.initMapSearchLevel = 6;
     }
 
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.isShowClusterList !== this.props.isShowClusterList) {
+            this.setHeight()
+        }
+    }
+
+
     componentDidMount() {
         const {longitude, latitude} = defaultPosition
 
@@ -76,7 +84,23 @@ class MapContainer extends Component {
             })
         });
 
+        window.doClickCityOverlay = (index) => {
+            this.map.setLevel(this.initMapCityLevel - 3);
+            this.map.setCenter(customCityList[index].position);
+            this.map.panTo(customCityList[index].position);
+            this.props.setParentState({
+                isShowClusterList: false
+            });
+        }
+
+        window.doClickDoOverlay = (index) => {
+            this.map.setLevel(this.initMapCityLevel);
+            this.map.setCenter(customDoList[index].position);
+            this.map.panTo(customDoList[index].position);
+        }
+
         this.showDoGroup()
+        this.setHeight()
     }
 
 
@@ -206,7 +230,7 @@ class MapContainer extends Component {
         });
 
         try {
-            const fetchResult = await fetch('http://www.kosirock.com/api/kosiwons/listByIdList', {
+            const fetchResult = await fetch('http://www.kosirock.co.kr/api/kosiwons/listByIdList', {
                 method: 'POST',
                 headers: fetchHeader,
                 body: JSON.stringify({
@@ -266,7 +290,7 @@ class MapContainer extends Component {
         this.idArrayList.push(marker.kosiwon._id);
 
         try {
-            const fetchResult = await fetch('http://www.kosirock.com/api/kosiwons/listByIdList', {
+            const fetchResult = await fetch('http://www.kosirock.co.kr/api/kosiwons/listByIdList', {
                 method: 'POST',
                 headers: fetchHeader,
                 body: JSON.stringify({
@@ -445,12 +469,12 @@ class MapContainer extends Component {
 
     render() {
         return (
-            <div ng-show="vars.isShowMap" className="map_canvas" style={{marginTop: '53px'}}>
+            <div ng-show="vars.isShowMap" className="map_canvas" style={{top: '53px', overflow: 'hidden', height: window.innerHeight - 53 - 52}}>
 
-                <div id="map" align="absmiddle" style={{width: '100%', height: '83%'}}/>
+                <div id="map" align="absmiddle" style={{width: '100%', height: window.innerHeight - 53 - 52, overflow: 'hidden'}}/>
 
                 <div className="place_btn" ng-click="doSetCurrentPosition()">
-                    <img src="img/place.png" align="absmiddle" width="18px" height="18px" style={{marginTop: '6px'}}/>
+                    <img src="img/place.png" align="absmiddle" width="18px" height="18px" style={{marginTop: '-5px'}}/>
                 </div>
 
                 <div className="place_search">

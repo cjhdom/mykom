@@ -16,25 +16,29 @@ class ClusterListContainer extends Component {
 
     render() {
         const {isShowClusterList, clusterList, isShowMap} = this.props
+        const length = clusterList.length
         return (
             <Fragment>
-                <div className={`main_under${isShowClusterList ? '2' : ''}`}>
+                <div className={`main_under${isShowClusterList ? '2' : ''}`} style={{paddingLeft: '0px'}}>
+                    {length > 0 && isShowClusterList &&
                     <img src={isShowClusterList ? 'img/main_down.png' : 'img/main_up.png'}
                          align="absmiddle" width="33px" height="33px"
-                         style={{position: 'absolute', top: '8px', left: '10px'}} onClick={this.toggleClusterList}/>
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>이 지역 고시원 {clusterList.length}개
-                    <img src="img/seeall.png" align="absmiddle" width="107px"
-                         height="33px" style={{position: 'absolute', top: '8px', right: '15px'}}
-                         ng-click="doShowAll()"/>
+                         style={{position: 'absolute', top: '8px', left: '10px'}} onClick={this.toggleClusterList}/>}
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>이 지역 고시원 {length}개
+                    {length > 0 && isShowClusterList && <img src="img/seeall.png" align="absmiddle" width="107px"
+                                                             height="33px"
+                                                             style={{position: 'absolute', top: '8px', right: '15px'}}
+                                                             ng-click="doShowAll()"/>}
                 </div>
 
-                {isShowClusterList && <div className={isShowMap ? 'main_under_list' : 'main_under_list_all'}>
+                {isShowClusterList && <div className={isShowMap ? 'main_under_list' : 'main_under_list_all'}
+                                           style={{overflowX: 'hidden'}}>
                     {clusterList.map(data => {
                         return (
                             <div className="main_under_list_cell" ng-click="doShowDetail(data._id, data.kosiwonName)"
                                  key={data._id}>
                                 <div style={{width: '120px', height: '105px', float: 'left', marginRight: '10px'}}>
-                                    <img ng-src="{{data.thumbnailUri}}" align="absmiddle" width="100%" height="100%"/>
+                                    <img src={data.thumbnailUri} align="absmiddle" width="100%" height="100%"/>
                                 </div>
                                 <div style={{width: '2%', height: '100%', float: 'left'}}>
 

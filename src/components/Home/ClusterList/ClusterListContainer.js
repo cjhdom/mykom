@@ -1,10 +1,22 @@
 import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 
+const resultStyle = {
+    overflowX: 'hidden'
+}
+const getListStyle = (isShowMap) => {
+    return isShowMap ? resultStyle : {
+        ...resultStyle,
+        marginTop: '54px',
+        position: 'inherit'
+    }
+}
+
 class ClusterListContainer extends Component {
     constructor(props) {
         super(props);
         this.toggleClusterList = this.toggleClusterList.bind(this)
+        this.toggleShowMap = this.toggleShowMap.bind(this)
     }
 
     toggleClusterList() {
@@ -14,25 +26,33 @@ class ClusterListContainer extends Component {
         })
     }
 
+    toggleShowMap() {
+        const {setParentState, isShowMap} = this.props
+        setParentState({
+            isShowMap: !isShowMap
+        })
+    }
+
     render() {
         const {isShowClusterList, clusterList, isShowMap} = this.props
         const length = clusterList.length
+
         return (
             <Fragment>
-                <div className={`main_under${isShowClusterList ? '2' : ''}`} style={{paddingLeft: '0px'}}>
+                {isShowMap && <div className={`main_under${isShowClusterList ? '2' : ''}`} style={{paddingLeft: '0px'}}>
                     {length > 0 && isShowClusterList &&
                     <img src={isShowClusterList ? 'img/main_down.png' : 'img/main_up.png'}
                          align="absmiddle" width="33px" height="33px"
                          style={{position: 'absolute', top: '8px', left: '10px'}} onClick={this.toggleClusterList}/>}
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>이 지역 고시원 {length}개
-                    {length > 0 && isShowClusterList && <img src="img/seeall.png" align="absmiddle" width="107px"
+                    {length > 0 && isShowClusterList && <img src="/img/seeall.png" align="absmiddle" width="107px"
                                                              height="33px"
                                                              style={{position: 'absolute', top: '8px', right: '15px'}}
-                                                             ng-click="doShowAll()"/>}
-                </div>
+                                                             onClick={this.toggleShowMap}/>}
+                </div>}
 
                 {isShowClusterList && <div className={isShowMap ? 'main_under_list' : 'main_under_list_all'}
-                                           style={{overflowX: 'hidden'}}>
+                                           style={getListStyle(isShowMap)}>
                     {clusterList.map(data => {
                         return (
                             <div className="main_under_list_cell" ng-click="doShowDetail(data._id, data.kosiwonName)"

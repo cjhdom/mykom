@@ -128,23 +128,26 @@ class Home extends Component {
         return (
             <Fragment>
                 <div style={getStyle(!isShowSearch)}>
-                    <div className="header_jh">
-                        <img src="img/logo.png" align="absmiddle" width="105px" height="23px"/>
+                    <div className="header_jh" style={{position: 'fixed'}}>
+                        <localimg src="/img/logo.png" align="absmiddle" width="105px" height="23px"/>
                         <div className="header_jh_right">
-                            <img src="img/search_btn.png" align="absmiddle" width="52px" height="52px" style={{marginTop: '-3px'}}
+                            <img src="/img/search_btn.png" align="absmiddle" width="52px" height="52px"
+                                 style={{marginTop: '-3px'}}
                                  onClick={this.toggleSearch}/>
                         </div>
                     </div>
-
-                    <MapContainer setParentState={this.setParentState}
-                                  setParentStateAsync={this.setParentStateAsync}
-                                  isShowClusterList={isShowClusterList}
-                                  priceRange={priceRange}
-                                  options={options}
-                                  lat={lat}
-                                  lng={lng}
-                                  address={address}
-                    />
+                    <div style={getStyle(isShowMap)}>
+                        <MapContainer
+                            setParentState={this.setParentState}
+                            setParentStateAsync={this.setParentStateAsync}
+                            isShowClusterList={isShowClusterList}
+                            priceRange={priceRange}
+                            options={options}
+                            lat={lat}
+                            lng={lng}
+                            address={address}
+                        />
+                    </div>
 
                     <ClusterListContainer setParentState={this.setParentState}
                                           isShowClusterList={isShowClusterList}

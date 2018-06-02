@@ -6,20 +6,11 @@ import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 class AddressContainer extends Component {
     constructor(props) {
         super(props)
-        this.state = {address: ''}
         this.onChange = this.onChange.bind(this)
-        this.handleSelect = this.handleSelect.bind(this)
-    }
-
-    handleSelect (address) {
-        /*geocodeByAddress(address)
-            .then(results => getLatLng(results[0]))
-            .then(latLng => this.props.history.push(`/search?latitude=${latLng.lat}&longitude=${latLng.lng}`))*/
     }
 
     onChange(address) {
-        this.setState({
-            ...this.state,
+        this.props.setParentState({
             address
         })
     }
@@ -38,7 +29,7 @@ class AddressContainer extends Component {
         const shouldFetchSuggestions = ({value}) => value.length > 2
 
         const inputProps = {
-            value: this.state.address,
+            value: this.props.address,
             onChange: this.onChange,
             type: 'search',
             name: 'search_bar',
@@ -47,7 +38,7 @@ class AddressContainer extends Component {
         }
 
         return <Address inputProps={inputProps}
-                       handleSelect={this.handleSelect}
+                       handleSelect={this.props.handleSelect}
                        shouldFetchSuggestions={shouldFetchSuggestions}
                        autocompleteItem={AutocompleteItem}
         />

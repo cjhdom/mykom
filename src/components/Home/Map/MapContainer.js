@@ -4,6 +4,7 @@ import {fetchHeader, defaultPosition} from "../../../data/consts";
 import {customCityList, customDoList, getDiameter, getDistanceFromLatLonInKm} from "../../../data/custom"
 import $ from 'jquery'
 import AddressContainer from "../Address/AddressContainer";
+import {geocodeByAddress, getLatLng} from "react-places-autocomplete";
 
 const parseOptions = options => {
     return Object.keys(options).map(_ => ({
@@ -22,15 +23,18 @@ class MapContainer extends Component {
         this.initMapDoLevel = 10;
         this.initMapCityLevel = 9;
         this.initMapSearchLevel = 6;
+
+        this.handleSelect = this.handleSelect.bind(this)
     }
 
-
-    componentDidUpdate(prevProps, prevState) {
+    async componentDidUpdate(prevProps) {
         if (prevProps.isShowClusterList !== this.props.isShowClusterList) {
             this.setHeight()
         }
+        if (prevProps.lat !== this.props.lat || prevProps.lng !== this.props.lng) {
+            await this.doSearch(this.props.lat, this.props.lng)
+        }
     }
-
 
     componentDidMount() {
         const {longitude, latitude} = defaultPosition
@@ -102,14 +106,6 @@ class MapContainer extends Component {
         this.showDoGroup()
         this.setHeight()
     }
-
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.isShowClusterList !== this.props.isShowClusterList) {
-            this.setHeight()
-        }
-    }
-
 
     clearCityGroup() {
         customCityList.forEach(function (customOverlay) {
@@ -448,6 +444,8 @@ class MapContainer extends Component {
                 totalItems: result.totalItems
             })
 
+            this.map.setLevel(this.initMapSearchLevel)
+
             if (result.totalItems < 1) {
                 this.clearCluster()
             } else {
@@ -467,25 +465,47 @@ class MapContainer extends Component {
         ))
     }
 
-    render() {
-        return (
-            <div ng-show="vars.isShowMap" className="map_canvas" style={{top: '53px', overflow: 'hidden', height: window.innerHeight - 53 - 52}}>
+    handleSelect() {
+        const {setParentState, address} = this.props
+        if (!address) {
+            setParentState({
+                lat: 37.55375859999999,
+                lng: 126.98096959999998
+            })
+        } else {
+            geocodeByAddress(address)
+                .then(results => getLatLng(results[0]))
+                .then(latLng => setParentState({
+                    lat: latLng.lat,
+                    lng: latLng.lng
+                }))
+        }
+    }
 
-                <div id="map" align="absmiddle" style={{width: '100%', height: window.innerHeight - 53 - 52, overflow: 'hidden'}}/>
+    render() {
+        const {setParentState, address} = this.props
+        return (
+            <div ng-show="vars.isShowMap" className="map_canvas"
+                 style={{top: '53px', overflow: 'hidden', height: window.innerHeight - 53 - 52}}>
+
+                <div id="map" align="absmiddle"
+                     style={{width: '100%', height: window.innerHeight - 53 - 52, overflow: 'hidden'}}/>
 
                 <div className="place_btn" ng-click="doSetCurrentPosition()">
                     <img src="img/place.png" align="absmiddle" width="18px" height="18px" style={{marginTop: '-5px'}}/>
                 </div>
 
                 <div className="place_search">
-                    <img src="img/magnify.png" ng-click="doImgClick()" align="absmiddle" width="16px" height="15px"
-                         style={{position: 'absolute', top: '8px', left: '10px'}}/>
+                        <img src="img/magnify.png" onClick={this.handleSelect} align="absmiddle" width="16px" height="15px"
+                             style={{position: 'absolute', top: '8px', left: '10px'}}/>
                     {/*<input id="place" type="search" size="60" name="search_bar" googleplace="" g-places-autocomplete
                            ng-model="autocomplete" placeholder="지역명, 지하철역명, 대학교명을 입력하세요."
                            ng-keydown="doEnterkey($event)" force-selection="true" data-ng-click="clearSearch()"
                            options="autocompleteOptions" data-tap-disabled="true" ng-change='disableTap()'
                            ng-model="search" kr-input/>*/}
-                    <AddressContainer/>
+                    <AddressContainer setParentState={setParentState}
+                                      address={address}
+                                      handleSelect={this.handleSelect}/>
                 </div>
             </div>
         )

@@ -30,7 +30,8 @@ class Home extends Component {
             isShowSearch: false,
             clusterList: [],
             itemList: [],
-            totalPages: 0
+            totalPages: 0,
+            address: ''
         }
         this.handleOnChange = this.handleOnChange.bind(this)
         this.handleOnChangeAll = this.handleOnChangeAll.bind(this)
@@ -118,7 +119,10 @@ class Home extends Component {
             options,
             itemList,
             isShowClusterList,
-            isShowSearch
+            isShowSearch,
+            lat,
+            lng,
+            address
         } = this.state
 
         return (
@@ -137,6 +141,9 @@ class Home extends Component {
                                   isShowClusterList={isShowClusterList}
                                   priceRange={priceRange}
                                   options={options}
+                                  lat={lat}
+                                  lng={lng}
+                                  address={address}
                     />
 
                     <ClusterListContainer setParentState={this.setParentState}

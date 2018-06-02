@@ -41,14 +41,16 @@ class Address extends Component {
     render() {
         const styles = {
             root: {
-                opacity: 1
+                opacity: 1,
+                position: 'absolute',
+                width: '100%'
             },
             autocompleteContainer: {
-                position: 'relative !important',
+                position: 'absolute !important',
                 MozBoxSizing: 'border-box',
                 WebkitBoxSizing: 'border-box',
                 left: this.position.left + 'px',
-                width: this.position.width + 'px',
+                width: '100%',
                 backgroundColor: 'rgba(255, 255, 255, 1)',
                 zIndex: '1000',
                 borderRadius: '2px',
@@ -56,14 +58,13 @@ class Address extends Component {
                 fontFamily: 'Arial, sans-serif',
                 boxSizing: 'border-box',
                 overflow: 'visible',
-                marginTop: '-8px',
-                top: '-14px',
+                marginTop: '30px',
                 opacity: '1 !important'
                 // top: (this.position.top) + 'px',
             },
             input: {
                 height: '17px',
-                position: 'relative'
+                position: 'absolute'
             }
         }
         const cssClasses = {
@@ -86,6 +87,7 @@ class Address extends Component {
                 autocompleteItem={this.props.autocompleteItem}
                 styles={styles}
                 onSelect={this.props.handleSelect}
+                onEnterKeyDown={this.props.handleSelect}
             />
         )
     }

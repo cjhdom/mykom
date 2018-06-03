@@ -39,6 +39,7 @@ class Home extends Component {
         this.setParentState = this.setParentState.bind(this)
         this.setParentStateAsync = this.setParentStateAsync.bind(this)
         this.toggleSearch = this.toggleSearch.bind(this)
+        this.toggleMap = this.toggleMap.bind(this)
     }
 
     handleSelect(e) {
@@ -111,6 +112,13 @@ class Home extends Component {
         })
     }
 
+    toggleMap() {
+        this.setState({
+            ...this.state,
+            isShowMap: !this.state.isShowMap
+        })
+    }
+
     render() {
         const {
             isShowMap,
@@ -129,7 +137,15 @@ class Home extends Component {
             <Fragment>
                 <div style={getStyle(!isShowSearch)}>
                     <div className="header_jh" style={{position: 'fixed'}}>
-                        <localimg src="/img/logo.png" align="absmiddle" width="105px" height="23px"/>
+
+                        {!isShowMap && <Fragment>
+                            {itemList.length}개의 고시원
+                            <div className="header_jh_left">
+                                <img src="img/back_btn.png" align="absmiddle" width="52px" height="52px"
+                                     onClick={this.toggleMap}/>
+                            </div>
+                        </Fragment>}
+                        {isShowMap && <img src="/img/logo.png" align="absmiddle" width="105px" height="23px"/>}
                         <div className="header_jh_right">
                             <img src="/img/search_btn.png" align="absmiddle" width="52px" height="52px"
                                  style={{marginTop: '-3px'}}

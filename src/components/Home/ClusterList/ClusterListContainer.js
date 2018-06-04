@@ -34,12 +34,13 @@ class ClusterListContainer extends Component {
     }
 
     render() {
-        const {isShowClusterList, clusterList, isShowMap} = this.props
-        const length = clusterList.length
+        const {isShowClusterList, clusterList, isShowMap, itemList} = this.props
+        const length = isShowClusterList ? clusterList.length : itemList.length
 
         return (
             <Fragment>
-                {isShowMap && <div className={`main_under${isShowClusterList ? '2' : ''}`} style={{paddingLeft: '0px'}}>
+                {isShowMap && <div className={`main_under${isShowClusterList ? '2' : ''}`}
+                                   style={{paddingLeft: isShowClusterList ? '33px' : '0px'}}>
                     {length > 0 && isShowClusterList &&
                     <img src={isShowClusterList ? 'img/main_down.png' : 'img/main_up.png'}
                          align="absmiddle" width="33px" height="33px"

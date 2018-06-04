@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import {isEqual} from 'lodash';
 import {fetchHeader, defaultPosition} from "../../../data/consts";
 import {customCityList, customDoList, getDiameter, getDistanceFromLatLonInKm} from "../../../data/custom"
 import $ from 'jquery'
@@ -31,7 +31,8 @@ class MapContainer extends Component {
         if (prevProps.isShowClusterList !== this.props.isShowClusterList) {
             this.setHeight()
         }
-        if (prevProps.lat !== this.props.lat || prevProps.lng !== this.props.lng) {
+        if (prevProps.lat !== this.props.lat || prevProps.lng !== this.props.lng ||
+            !isEqual(prevProps.options, this.props.options) || !isEqual(prevProps.priceRange, this.props.priceRange)) {
             await this.doSearch(this.props.lat, this.props.lng)
         }
     }
@@ -169,7 +170,7 @@ class MapContainer extends Component {
         var points = [];
 
         this.markers = [];
-        this.state.dataList.forEach((data) => {
+        this.props.itemList.forEach((data) => {
             var position = new daum.maps.LatLng(data.location[1], data.location[0]);
             var marker = new daum.maps.Marker({
                 map: this.map,
@@ -265,8 +266,7 @@ class MapContainer extends Component {
 
     updateResultList() {
         return this.props.setParentStateAsync({
-            clusterList: this.clusterList,
-            itemList: this.idArrayList
+            clusterList: this.clusterList
         })
     }
 
@@ -355,7 +355,7 @@ class MapContainer extends Component {
     }
 
     async doSearch(lat, lng) {
-        const {priceRange, options} = this.props
+        const {priceRange, options, isShowClusterList} = this.props
         // const {match} = this.props
         // const {longitude, latitude} = match.params
         let latlng;
@@ -382,14 +382,13 @@ class MapContainer extends Component {
         const neLatLng = bounds.getNorthEast();
 
         const diagonal = getDistanceFromLatLonInKm(swLatLng.jb, swLatLng.ib, neLatLng.jb, neLatLng.ib);
-        let maxDistance = Math.floor(getDiameter(diagonal) / 2.5); // 범위 조절
-        if (!maxDistance) maxDistance = 10000;
+        let maxDistance = Math.floor(getDiameter(diagonal, isShowClusterList, window.innerHeight, window.innerWidth) / 2.5); // 범위 조절
 
         const optionsParsed = parseOptions(options)
 
         let priceRangeParsed = []
 
-        if (priceRange.priceMin !== '0') {
+        if (priceRange.priceMin !== '') {
             priceRangeParsed.push({
                 operator: '$lte',
                 type: 'number',
@@ -398,7 +397,7 @@ class MapContainer extends Component {
             })
         }
 
-        if (priceRange.priceMax !== '0') {
+        if (priceRange.priceMax !== '') {
             priceRangeParsed.push({
                 operator: '$gte',
                 type: 'number',
@@ -439,9 +438,8 @@ class MapContainer extends Component {
             })
 
             const result = await searchFetch.json()
-            await this.setStateAsync({
-                dataList: result.items,
-                totalItems: result.totalItems
+            await this.props.setParentStateAsync({
+                itemList: result.items
             })
 
             this.map.setLevel(this.initMapSearchLevel)
@@ -496,8 +494,8 @@ class MapContainer extends Component {
                 </div>
 
                 <div className="place_search">
-                        <img src="img/magnify.png" onClick={this.handleSelect} align="absmiddle" width="16px" height="15px"
-                             style={{position: 'absolute', top: '8px', left: '10px'}}/>
+                    <img src="img/magnify.png" onClick={this.handleSelect} align="absmiddle" width="16px" height="15px"
+                         style={{position: 'absolute', top: '8px', left: '10px'}}/>
                     {/*<input id="place" type="search" size="60" name="search_bar" googleplace="" g-places-autocomplete
                            ng-model="autocomplete" placeholder="지역명, 지하철역명, 대학교명을 입력하세요."
                            ng-keydown="doEnterkey($event)" force-selection="true" data-ng-click="clearSearch()"

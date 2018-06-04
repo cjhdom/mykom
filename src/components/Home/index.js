@@ -17,8 +17,8 @@ class Home extends Component {
         this.state = {
             isShowMap: true,
             priceRange: {
-                priceMin: '0',
-                priceMax: '0'
+                priceMin: '',
+                priceMax: ''
             },
             options: {
                 isParking: false,
@@ -145,10 +145,9 @@ class Home extends Component {
                                      onClick={this.toggleMap}/>
                             </div>
                         </Fragment>}
-                        {isShowMap && <img src="/img/logo.png" align="absmiddle" width="105px" height="23px"/>}
+                        {isShowMap && <img src="/img/logo.png" align="absmiddle" width="105px" height="23px"  style={{marginTop: '15px'}}/>}
                         <div className="header_jh_right">
                             <img src="/img/search_btn.png" align="absmiddle" width="52px" height="52px"
-                                 style={{marginTop: '-3px'}}
                                  onClick={this.toggleSearch}/>
                         </div>
                     </div>
@@ -157,6 +156,7 @@ class Home extends Component {
                             setParentState={this.setParentState}
                             setParentStateAsync={this.setParentStateAsync}
                             isShowClusterList={isShowClusterList}
+                            itemList={itemList}
                             priceRange={priceRange}
                             options={options}
                             lat={lat}
@@ -168,7 +168,8 @@ class Home extends Component {
                     <ClusterListContainer setParentState={this.setParentState}
                                           isShowClusterList={isShowClusterList}
                                           clusterList={clusterList}
-                                          isShowMap={isShowMap}/>
+                                          isShowMap={isShowMap}
+                                          itemList={itemList}/>
                 </div>
 
                 <div style={getStyle(isShowSearch)}>

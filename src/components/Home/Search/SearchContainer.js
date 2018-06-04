@@ -2,16 +2,24 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from "react-router";
 
+const defaultState = {
+    priceRange: {
+        priceMin: '',
+        priceMax: ''
+    },
+    options: {
+        isParking: false,
+        isMeal: false,
+        isSeparate: false,
+        isRestRoom: false
+    }
+}
+
 class SearchContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.defaultState = {
-            priceRange: {...this.props.priceRange},
-            options: {...this.props.options}
-        }
-
-        this.state = this.defaultState
+        this.state = defaultState
         this.goBack = this.goBack.bind(this)
         this.handleOnChange = this.handleOnChange.bind(this)
         this.handlePrice = this.handlePrice.bind(this)
@@ -58,7 +66,7 @@ class SearchContainer extends Component {
     }
 
     resetFilter() {
-        this.setState(this.defaultState)
+        this.setState(defaultState)
     }
 
     render() {
@@ -76,95 +84,106 @@ class SearchContainer extends Component {
 
                 </div>
 
-                <div style={{height: '100%'}}>
-                    <br/><br/><br/><br/><br/>
-                    <div className="form_title">
-                        가격 설정
-                    </div>
-                    <div className="form2">
-                        <div className="form2_cell0">
-                            <input ng-model="vars.priceMin" type="text"
-                                   style={{
-                                       borderBottom: '1px solid black',
-                                       width: '35%',
-                                       display: 'inline-block',
-                                       verticalAlign: 'top',
-                                       textAlign: 'center'
-                                   }}
-                                   value={priceMin}
-                                   placeholder="0만원" onChange={this.handlePrice}/> &nbsp;&nbsp;&nbsp;&nbsp;
-                            ~ &nbsp;&nbsp;&nbsp;&nbsp;
-                            <input ng-model="vars.priceMax" type="text"
-                                   style={{
-                                       borderBottom: '1px solid black',
-                                       width: '35%',
-                                       display: 'inline-block',
-                                       verticalAlign: 'top',
-                                       textAlign: 'center'
-                                   }}
-                                   value={priceMax}
-                                   placeholder="0만원" onChange={this.handlePrice}/>
-                        </div>
-                    </div>
-                    <br/><br/><br/>
-                    <div className="form_title">
-                        옵션 설정
-                    </div>
-                    <div className="form2">
-                        <div className="form2_cell">
-					<span ng-style="{color: vars.isParking ? '#ff9999' : '#cccccc'}">
-						주차 가능
-					</span>
-                            <div style={{position: 'absolute', top: '-1px', right: '0px'}}>
-                                <label className="toggle toggle-positive">
-                                    <input type="checkbox" id="isParking" onChange={this.handleOnChange}
-                                           checked={isParking}/>
-                                    <div className="track">
-                                        <div className="handle"/>
-                                    </div>
-                                </label>
+                <div className="c4 scroll-view ionic-scroll overflow-scroll scroll-y"
+                     style={{textAlign: 'center', position: 'absolute'}}>
+                    <div className="scroll">
+                        <div style={{height: '100%'}}>
+                            <br/><br/><br/><br/><br/>
+                            <div className="form_title">
+                                가격 설정
                             </div>
-                        </div>
-                        <div className="form2_cell">
-					<span ng-style="{color: vars.isMeal ? '#ff9999' : '#cccccc'}">
-						식사제공
-					</span>
-                            <div style={{position: 'absolute', top: '-1px', right: '0px'}}>
-                                <label className="toggle toggle-positive">
-                                    <input type="checkbox" id="isMeal" onChange={this.handleOnChange}
-                                           checked={isMeal}/>
-                                    <div className="track">
-                                        <div className="handle"/>
-                                    </div>
-                                </label>
+                            <div className="form2">
+                                <div className="form2_cell0">
+                                    <input id="priceMin" type="text"
+                                           style={{
+                                               borderBottom: '1px solid black',
+                                               width: '35%',
+                                               display: 'inline-block',
+                                               verticalAlign: 'top',
+                                               textAlign: 'center',
+                                               height: '34px'
+                                           }}
+                                           value={priceMin}
+                                           placeholder="0만원" onChange={this.handlePrice}/>
+                                    &nbsp;&nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input id="priceMax" type="text"
+                                           style={{
+                                               borderBottom: '1px solid black',
+                                               width: '35%',
+                                               display: 'inline-block',
+                                               verticalAlign: 'top',
+                                               textAlign: 'center',
+                                               height: '34px'
+                                           }}
+                                           value={priceMax}
+                                           placeholder="0만원" onChange={this.handlePrice}/>
+                                </div>
                             </div>
-                        </div>
-                        <div className="form2_cell">
-					<span ng-style="{color: vars.isSeparate ? '#ff9999' : '#cccccc'}">
-						남녀층 분리
-					</span>
-                            <div style={{position: 'absolute', top: '-1px', right: '0px'}}>
-                                <label className="toggle toggle-positive">
-                                    <input type="checkbox" id="isSeparate" onChange={this.handleOnChange}
-                                           checked={isSeparate}/>
-                                    <div className="track">
-                                        <div className="handle"/>
-                                    </div>
-                                </label>
+                            <br/><br/><br/>
+                            <div className="form_title">
+                                옵션 설정
                             </div>
-                        </div>
-                        <div className="form2_cell_last">
-					<span ng-style="{color: vars.isRestRoom ? '#ff9999' : '#cccccc'}">
-						개별화장실
-					</span>
-                            <div style={{position: 'absolute', top: '-1px', right: '0px'}}>
-                                <label className="toggle toggle-positive">
-                                    <input type="checkbox" id="isRestRoom" onChange={this.handleOnChange}
-                                           checked={isRestRoom}/>
-                                    <div className="track">
-                                        <div className="handle"/>
+                            <div className="form2">
+                                <div className="form2_cell">
+                                    <span ng-style="{color: vars.isParking ? '#ff9999' : '#cccccc'}"
+                                          style={{color: 'rgb(204, 204, 204)'}}>
+                                        주차 가능
+                                    </span>
+                                    <div style={{position: 'absolute', top: '-1px', right: '0px'}}>
+                                        <label className="toggle toggle-positive" style={{marginTop: '5px'}}>
+                                            <input type="checkbox" id="isParking" onChange={this.handleOnChange}
+                                                   checked={isParking}/>
+                                            <div className="track">
+                                                <div className="handle"/>
+                                            </div>
+                                        </label>
                                     </div>
-                                </label>
+                                </div>
+                                <div className="form2_cell">
+                                    <span ng-style="{color: vars.isMeal ? '#ff9999' : '#cccccc'}"
+                                          style={{color: 'rgb(204, 204, 204)'}}>
+                                        식사제공
+                                    </span>
+                                    <div style={{position: 'absolute', top: '-1px', right: '0px'}}>
+                                        <label className="toggle toggle-positive" style={{marginTop: '5px'}}>
+                                            <input type="checkbox" id="isMeal" onChange={this.handleOnChange}
+                                                   checked={isMeal}/>
+                                            <div className="track">
+                                                <div className="handle"/>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="form2_cell">
+                                    <span ng-style="{color: vars.isSeparate ? '#ff9999' : '#cccccc'}"
+                                          style={{color: 'rgb(204, 204, 204)'}}>
+                                        남녀층 분리
+                                    </span>
+                                    <div style={{position: 'absolute', top: '-1px', right: '0px'}}>
+                                        <label className="toggle toggle-positive" style={{marginTop: '5px'}}>
+                                            <input type="checkbox" id="isSeparate" onChange={this.handleOnChange}
+                                                   checked={isSeparate}/>
+                                            <div className="track">
+                                                <div className="handle"/>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div className="form2_cell_last">
+                                    <span ng-style="{color: vars.isRestRoom ? '#ff9999' : '#cccccc'}"
+                                          style={{color: 'rgb(204, 204, 204)'}}>
+                                        개별화장실
+                                    </span>
+                                    <div style={{position: 'absolute', top: '-1px', right: '0px'}}>
+                                        <label className="toggle toggle-positive" style={{marginTop: '5px'}}>
+                                            <input type="checkbox" id="isRestRoom" onChange={this.handleOnChange}
+                                                   checked={isRestRoom}/>
+                                            <div className="track">
+                                                <div className="handle"/>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

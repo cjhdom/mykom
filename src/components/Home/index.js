@@ -2,7 +2,6 @@ import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import {every} from 'lodash';
 import MapContainer from "./Map/MapContainer";
-import {withRouter} from "react-router";
 import SearchContainer from "./Search/SearchContainer";
 import ClusterListContainer from "./ClusterList/ClusterListContainer";
 
@@ -101,10 +100,6 @@ class Home extends Component {
         )
     }
 
-    routeTo(url) {
-        this.props.history.push(url)
-    }
-
     toggleSearch() {
         this.setState({
             ...this.state,
@@ -185,4 +180,4 @@ class Home extends Component {
 
 Home.propTypes = {};
 
-export default withRouter(Home);
+export default Home;

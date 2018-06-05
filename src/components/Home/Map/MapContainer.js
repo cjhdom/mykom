@@ -25,6 +25,7 @@ class MapContainer extends Component {
         this.initMapSearchLevel = 6;
 
         this.handleSelect = this.handleSelect.bind(this)
+        this.getCurrentLocation = this.getCurrentLocation.bind(this)
     }
 
     async componentDidUpdate(prevProps) {
@@ -480,27 +481,34 @@ class MapContainer extends Component {
         }
     }
 
+    getCurrentLocation () {
+        const geolocation = window.navigator && window.navigator.geolocation
+        if (geolocation) {
+            geolocation.getCurrentPosition(async position => {
+                const {latitude, longitude} = position.coords
+                await this.doSearch(latitude, longitude)
+            }, error => {
+                console.log(error)
+            })
+        }
+    }
+
     render() {
         const {setParentState, address} = this.props
         return (
-            <div ng-show="vars.isShowMap" className="map_canvas"
+            <div className="map_canvas"
                  style={{top: '53px', overflow: 'hidden', height: window.innerHeight - 53 - 52}}>
 
                 <div id="map" align="absmiddle"
                      style={{width: '100%', height: window.innerHeight - 53 - 52, overflow: 'hidden'}}/>
 
-                <div className="place_btn" ng-click="doSetCurrentPosition()">
+                <div className="place_btn" onClick={this.getCurrentLocation}>
                     <img src="img/place.png" align="absmiddle" width="18px" height="18px" style={{marginTop: '-5px'}}/>
                 </div>
 
                 <div className="place_search">
                     <img src="img/magnify.png" onClick={this.handleSelect} align="absmiddle" width="16px" height="15px"
                          style={{position: 'absolute', top: '8px', left: '10px'}}/>
-                    {/*<input id="place" type="search" size="60" name="search_bar" googleplace="" g-places-autocomplete
-                           ng-model="autocomplete" placeholder="지역명, 지하철역명, 대학교명을 입력하세요."
-                           ng-keydown="doEnterkey($event)" force-selection="true" data-ng-click="clearSearch()"
-                           options="autocompleteOptions" data-tap-disabled="true" ng-change='disableTap()'
-                           ng-model="search" kr-input/>*/}
                     <AddressContainer setParentState={setParentState}
                                       address={address}
                                       handleSelect={this.handleSelect}/>

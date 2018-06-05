@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from "react-router";
 
 const defaultState = {
     priceRange: {
@@ -203,4 +202,4 @@ class SearchContainer extends Component {
 
 SearchContainer.propTypes = {};
 
-export default withRouter(SearchContainer);
+export default SearchContainer;

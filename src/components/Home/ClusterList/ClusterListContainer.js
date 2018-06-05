@@ -1,5 +1,7 @@
 import React, {Component, Fragment} from 'react';
-import PropTypes from 'prop-types';
+import {EnumRoute} from '../../../data/consts'
+import {routeTo} from "../../../acitons";
+import {connect} from "react-redux";
 
 const resultStyle = {
     overflowX: 'hidden'
@@ -7,8 +9,7 @@ const resultStyle = {
 const getListStyle = (isShowMap) => {
     return isShowMap ? resultStyle : {
         ...resultStyle,
-        marginTop: '54px',
-        position: 'inherit'
+        height: `${window.outerHeight - 54}px`
     }
 }
 
@@ -34,7 +35,7 @@ class ClusterListContainer extends Component {
     }
 
     render() {
-        const {isShowClusterList, clusterList, isShowMap, itemList} = this.props
+        const {isShowClusterList, clusterList, isShowMap, itemList, routeTo} = this.props
         const length = isShowClusterList ? clusterList.length : itemList.length
 
         return (
@@ -56,7 +57,7 @@ class ClusterListContainer extends Component {
                                            style={getListStyle(isShowMap)}>
                     {clusterList.map(data => {
                         return (
-                            <div className="main_under_list_cell" ng-click="doShowDetail(data._id, data.kosiwonName)"
+                            <div className="main_under_list_cell" onClick={() => routeTo(EnumRoute.detail, data._id)}
                                  key={data._id}>
                                 <div style={{width: '120px', height: '105px', float: 'left', marginRight: '10px'}}>
                                     <img src={data.thumbnailUri} align="absmiddle" width="100%" height="100%"/>
@@ -97,4 +98,9 @@ class ClusterListContainer extends Component {
 
 ClusterListContainer.propTypes = {};
 
-export default ClusterListContainer;
+export default connect(
+    () => ({}),
+    {
+        routeTo
+    }
+)(ClusterListContainer);

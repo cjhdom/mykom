@@ -11,3 +11,8 @@ export const defaultPosition = {
     latitude: 37.59248,
     longitude: 127.011876
 }
+
+export const EnumRoute = {
+    'main': 0,
+    'detail': 1
+}

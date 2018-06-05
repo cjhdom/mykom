@@ -1,23 +1,38 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {Route, Switch} from 'react-router-dom';
-import {ConnectedRouter} from 'react-router-redux'
-import {Provider} from 'react-redux'
-
+import {connect, Provider} from 'react-redux'
+import {EnumRoute} from '../data/consts'
 import Home from "./Home";
+import View from "./View";
+
+const styleBlock = {display: 'block'}
+const styleNone = {display: 'none'}
 
 class App extends Component {
+    constructor(props) {
+        super(props)
+        this.getStyle = this.getStyle.bind(this)
+    }
+
+    getStyle(page) {
+        if (this.props.currentPage === page) {
+            return styleBlock
+        } else {
+            return styleNone
+        }
+    }
+
     render() {
-        const {store, history} = this.props
+        const {store} = this.props
         return (
             <Provider store={store}>
-                <ConnectedRouter history={history}>
-                    <div id="wrapper">
-                        <Switch>
-                            <Route exact path="/" component={Home}/>
-                        </Switch>
+                <div>
+                    <div id="wrapper" style={this.getStyle(EnumRoute.main)}>
+                        <Home/>
                     </div>
-                </ConnectedRouter>
+                    <div style={this.getStyle(EnumRoute.detail)}>
+                        <View/>
+                    </div>
+                </div>
             </Provider>
         );
     }
@@ -25,4 +40,8 @@ class App extends Component {
 
 App.propTypes = {};
 
-export default App;
+export default connect(
+    state => ({
+        currentPage: state.currentPage
+    })
+)(App);

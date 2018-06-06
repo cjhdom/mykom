@@ -8,6 +8,8 @@ const defaultState = {
     payload: null
 }
 
+export const getId = state => state && state.payload
+
 const ui = (state = defaultState, action) => {
     switch (action.type) {
         case ROUTE_TO:

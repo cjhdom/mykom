@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {connect, Provider} from 'react-redux'
+import {connect} from 'react-redux'
 import {EnumRoute} from '../data/consts'
 import Home from "./Home";
 import View from "./View";
@@ -22,18 +22,15 @@ class App extends Component {
     }
 
     render() {
-        const {store} = this.props
         return (
-            <Provider store={store}>
-                <div>
-                    <div id="wrapper" style={this.getStyle(EnumRoute.main)}>
-                        <Home/>
-                    </div>
-                    <div style={this.getStyle(EnumRoute.detail)}>
-                        <View/>
-                    </div>
+            <div>
+                <div id="wrapper" style={this.getStyle(EnumRoute.main)}>
+                    <Home/>
                 </div>
-            </Provider>
+                <div style={this.getStyle(EnumRoute.detail)}>
+                    <View/>
+                </div>
+            </div>
         );
     }
 }

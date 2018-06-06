@@ -5,8 +5,9 @@ import {AppContainer} from 'react-hot-loader'
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
 import thunk from 'redux-thunk'
 
-import App from './components/App';
 import reducers from './reducers'
+import ReduxApp from './ReduxApp'
+import {EnumRoute} from "./data/consts";
 
 
 let devTools = window.__REDUX_DEVTOOLS_EXTENSION__ &&
@@ -17,7 +18,10 @@ if (process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production' || 
 
 const store = createStore(
     reducers,
-    {},
+    {
+        currentPage: EnumRoute.detail,
+        payload: '59a50a4c337f5a34066ea095'
+    },
     devTools
 )
 
@@ -26,7 +30,7 @@ const rootElement = document.getElementById('root');
 const renderApp = () => {
     ReactDom.render(
         <AppContainer>
-            <App store={store}/>
+            <ReduxApp store={store}/>
         </AppContainer>,
         rootElement
     );
@@ -38,7 +42,7 @@ if (module.hot) {
         const App = require('./components/App').default;
         ReactDom.render(
             <AppContainer>
-                <App store={store}/>
+                <ReduxApp store={store}/>
             </AppContainer>,
             rootElement
         );

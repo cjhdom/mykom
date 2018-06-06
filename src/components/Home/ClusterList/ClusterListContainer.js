@@ -9,7 +9,7 @@ const resultStyle = {
 const getListStyle = (isShowMap) => {
     return isShowMap ? resultStyle : {
         ...resultStyle,
-        height: `${window.outerHeight - 54}px`
+        height: `${window.innerHeight - 54}px`
     }
 }
 

@@ -15,7 +15,9 @@ class View extends Component {
         super(props);
         this.state = {
             success: false,
-            data: null
+            data: null,
+            isQuestionPopup: false,
+            isImagePopup: false
         }
     }
 
@@ -54,9 +56,21 @@ class View extends Component {
         }
     }
 
+    toggleShare() {
+        alert('공유하기 기능은 모바일 앱에서 로그인 후 사용해주세요.')
+    }
+
+    toggleFavorite() {
+        alert('찜하기 기능은 모바일 앱에서 로그인 후 사용해주세요.')
+    }
+
     render() {
         const {routeTo} = this.props
-        const {success} = this.state
+        const {
+            success,
+            isQuestionPopup,
+            isImagePopup
+        } = this.state
         if (success) {
             const {
                 _id,
@@ -76,6 +90,7 @@ class View extends Component {
                 isWoman,
                 kosiwonAddress,
                 location,
+                nanbangType,
                 kosiwonName,
                 kosiwonPhoneNo,
                 kosiwonUrl,
@@ -84,7 +99,8 @@ class View extends Component {
                 imageList,
                 priceMax,
                 priceMin,
-                floor
+                floor,
+                intro
             } = this.state.data
             return (
                 <Fragment>
@@ -97,6 +113,18 @@ class View extends Component {
                              style={{marginTop: '15px'}}/>
                     </div>
 
+                    {isImagePopup && <div className="pane" style={{
+                        background: 'rgb(0, 0, 0)',
+                        transform: 'translate3d(0%, 0px, 0px)',
+                        opacity: '1'
+                    }}>
+                        <ImageSwiperContainer imageList={imageList}/>
+                    </div>}
+
+                    {(isQuestionPopup) &&
+                    <div className="dark_wall"
+                         ng-show="vars.isQuestionPopup || vars.isSharePopup || vars.isDetailPopup"/>}
+
                     <div className="c4 scroll-view ionic-scroll overflow-scroll scroll-y"
                          style={{
                              position: 'absolute',
@@ -106,10 +134,32 @@ class View extends Component {
                          }}>
                         {success && <div className="scroll">
                             <ImageSwiperContainer imageList={imageList}/>
-                            <NameTagContainer/>
-                            <ViewMapContainer/>
-                            <OptionContainer/>
-                            <DescContainer/>
+                            <NameTagContainer kosiwonName={kosiwonName}
+                                              priceMin={priceMin}
+                                              priceMax={priceMax}
+                                              isMeal={isMeal}
+                                              isParking={isParking}
+                                              isRestRoom={isRestRoom}
+                                              isSeparate={isSeparate}
+                                              intro={intro}
+                                              toggleShare={this.toggleShare}
+                                              toggleFavorite={this.toggleFavorite}/>
+                            <ViewMapContainer kosiwonAddress={kosiwonAddress}
+                                              location={location}/>
+                            <OptionContainer floor={floor}
+                                             nanbangType={nanbangType}
+                                             isElevator={isElevator}
+                                             isParking={isParking}
+                                             isWoman={isWoman}
+                                             isMeal={isMeal}
+                                             isRestRoom={isRestRoom}
+                                             isSeparate={isSeparate}
+                                             optionDesk={optionDesk}
+                                             optionBed={optionBed}
+                                             optionCloset={optionCloset}
+                                             optionRefrigerator={optionRefrigerator}
+                                             optionAircon={optionAircon}/>
+                            <DescContainer desc={description}/>
                         </div>}
                     </div>
                     <div style={{bottom: '0px', position: 'fixed', height: '52px', zIndex: '10000'}}>

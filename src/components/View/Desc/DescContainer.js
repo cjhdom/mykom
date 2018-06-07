@@ -4,13 +4,15 @@ import PropTypes from 'prop-types';
 class DescContainer extends Component {
     render() {
         const {desc} = this.props
+        const shortDesc = desc.substring(0, 80)
+        const postFix = desc.length > 80 && ' ....'
         return (
             <Fragment>
-                <div className="option_jh" style={{borderBottom:'1px solid #d4d4d4'}}>
+                <div className="option_jh" style={{borderBottom: '1px solid #d4d4d4'}}>
                     <p>고시원 상세설명</p>
                     <span style={{fontWeight: 'normal'}}>
-                        {desc}
-		 	</span>
+                        {shortDesc}{postFix}
+		 	        </span>
                 </div>
 
                 <div className="road_view">

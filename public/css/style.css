@@ -43,6 +43,11 @@ button, input[type="reset"], input[type="button"], input[type="submit"] {
 	width:auto;
 }
 
+ul.indicator {position: relative; left: 0; bottom: 38px; width: 100%; text-align: center; z-index: 100; height: 0px;}
+ul.indicator li {display: inline-block; margin: 0 2px;}
+ul.indicator li a {display: block; width: 8px; height: 8px; border: 4px solid #eeeeee; border-radius: 50%; overflow: hidden; text-indent: -999px; box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.5); margin-right: 5px; margin-right: 5px;}
+ul.indicator li.on a {border-color: #ff9999; background: #ff9999;}
+ul.indicator li.slick-active a {border-color: #ff9999; background: #ff9999;}
 
 /* Empty. Add your own CSS if you like */
 

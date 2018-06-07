@@ -88,7 +88,7 @@ class View extends Component {
             } = this.state.data
             return (
                 <Fragment>
-                    <div className="header_jh" style={{position: 'fixed'}}>
+                    <div className="header_jh" style={{position: 'absolute'}}>
                         <div className="header_jh_left">
                             <img src="img/back_btn.png" align="absmiddle" width="52px" height="52px"
                                  onClick={() => routeTo(EnumRoute.main)}/>
@@ -105,7 +105,6 @@ class View extends Component {
                              overflowX: 'auto'
                          }}>
                         {success && <div className="scroll">
-                            <div className="list_spacer"/>
                             <ImageSwiperContainer imageList={imageList}/>
                             <NameTagContainer/>
                             <ViewMapContainer/>

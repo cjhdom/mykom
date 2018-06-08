@@ -1,1 +1,4 @@
-export const ROUTE_TO = 'ROUTE_TO'
+export const SET_PRICE_RANGE = 'SET_PRICE_RANGE'
+
+export const TOGGLE_SEARCH = 'TOGGLE_SEARCH'
+

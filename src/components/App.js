@@ -1,44 +1,22 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux'
-import {EnumRoute} from '../data/consts'
-import Home from "./Home";
-import View from "./View";
+import React from 'react'
+import Home from './Home/index';
+import View from './View/index';
+import {Provider} from "react-redux";
+import {Route, Switch} from 'react-router-dom';
+import {ConnectedRouter} from 'react-router-redux'
 
-const styleBlock = {display: 'block'}
-const styleNone = {display: 'none'}
-
-class App extends Component {
-    constructor(props) {
-        super(props)
-        this.getStyle = this.getStyle.bind(this)
-    }
-
-    getStyle(page) {
-        if (this.props.currentPage === page) {
-            return styleBlock
-        } else {
-            return styleNone
-        }
-    }
-
-    render() {
-        return (
-            <div>
-                <div id="wrapper" style={this.getStyle(EnumRoute.main)}>
-                    <Home/>
-                </div>
-                <div style={this.getStyle(EnumRoute.detail)}>
-                    <View/>
-                </div>
-            </div>
-        );
-    }
+const App = ({store, history}) => {
+    return (
+        <Provider store={store}>
+            <ConnectedRouter history={history}>
+                <Switch>
+                    <Route exact path="/" component={Home}/>
+                    <Route exact path="/view/:id" component={View}/>
+                    {/*<Route exact path="/view/:id/image" component={View}/>*/}
+                </Switch>
+            </ConnectedRouter>
+        </Provider>
+    )
 }
 
-App.propTypes = {};
-
-export default connect(
-    state => ({
-        currentPage: state.currentPage
-    })
-)(App);
+export default App

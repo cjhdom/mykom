@@ -1,26 +1,7 @@
-import {
-    ROUTE_TO
-} from '../data/ActionTypes'
-import {EnumRoute} from "../data/consts";
+import ui from "./ui";
+import home from "./home";
 
-const defaultState = {
-    currentPage: EnumRoute.main,
-    payload: null
+export default {
+    ui,
+    home
 }
-
-export const getId = state => state && state.payload
-
-const ui = (state = defaultState, action) => {
-    switch (action.type) {
-        case ROUTE_TO:
-            return {
-                ...state,
-                currentPage: action.page,
-                payload: action.payload || null
-            }
-        default:
-            return state
-    }
-}
-
-export default ui

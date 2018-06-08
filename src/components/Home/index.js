@@ -32,8 +32,8 @@ class Home extends Component {
             totalPages: 0,
             address: ''
         }
-        this.handleOnChange = this.handleOnChange.bind(this)
-        this.handleOnChangeAll = this.handleOnChangeAll.bind(this)
+        /*this.handleOnChange = this.handleOnChange.bind(this)
+        this.handleOnChangeAll = this.handleOnChangeAll.bind(this)*/
         this.handleSelect = this.handleSelect.bind(this)
         this.setParentState = this.setParentState.bind(this)
         this.setParentStateAsync = this.setParentStateAsync.bind(this)
@@ -53,7 +53,7 @@ class Home extends Component {
         })
     }
 
-    handleOnChange(e, original) {
+    /*handleOnChange(e, original) {
         const {id, value} = e.target
 
         this.setState({
@@ -85,7 +85,7 @@ class Home extends Component {
                 }
             }, {})
         })
-    }
+    }*/
 
     setParentState(newState) {
         this.setState({

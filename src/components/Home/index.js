@@ -4,6 +4,13 @@ import {every} from 'lodash';
 import MapContainer from "./Map/MapContainer";
 import SearchContainer from "./Search/SearchContainer";
 import ClusterListContainer from "./ClusterList/ClusterListContainer";
+import {getHomeState} from "../../reducers";
+import {
+    routeTo, saveMapState,
+    setAddress, setClusterList, setItemList, setLocation, setSearchOption, setShowCluster, toggleMap,
+    toggleSearch
+} from "../../acitons";
+import {connect} from "react-redux";
 
 const checkIsAllSelected = original => every(original)
 const getStyle = anyBool => ({
@@ -11,107 +18,11 @@ const getStyle = anyBool => ({
 })
 
 class Home extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isShowMap: true,
-            priceRange: {
-                priceMin: '',
-                priceMax: ''
-            },
-            options: {
-                isParking: false,
-                isMeal: false,
-                isSeparate: false,
-                isRestRoom: false
-            },
-            isShowClusterList: false,
-            isShowSearch: false,
-            clusterList: [],
-            itemList: [],
-            totalPages: 0,
-            address: ''
+    componentDidMount() {
+        const {isNoMap, isShowMap} = this.props
+        if ((!isNoMap && !isShowMap) || (isNoMap && isShowMap)) {
+            this.props.toggleMap()
         }
-        /*this.handleOnChange = this.handleOnChange.bind(this)
-        this.handleOnChangeAll = this.handleOnChangeAll.bind(this)*/
-        this.handleSelect = this.handleSelect.bind(this)
-        this.setParentState = this.setParentState.bind(this)
-        this.setParentStateAsync = this.setParentStateAsync.bind(this)
-        this.toggleSearch = this.toggleSearch.bind(this)
-        this.toggleMap = this.toggleMap.bind(this)
-    }
-
-    handleSelect(e) {
-        const {id, value} = e.target
-
-        this.setState({
-            ...this.state,
-            priceRange: {
-                ...this.state.priceRange,
-                [id]: value
-            }
-        })
-    }
-
-    /*handleOnChange(e, original) {
-        const {id, value} = e.target
-
-        this.setState({
-            ...this.state,
-            [original]: {
-                ...this.state[original],
-                [id]: parseInt(value) ? value : !this.state[original][id]
-            }
-        }, () => {
-            const {isAllSelected, ...originalFiltered} = this.state[original]
-            this.setState({
-                ...this.state,
-                [original]: {
-                    ...this.state[original],
-                    isAllSelected: checkIsAllSelected(originalFiltered)
-                }
-            })
-        })
-    }
-
-    handleOnChangeAll(e, original) {
-        const {isAllSelected} = this.state[original]
-        this.setState({
-            ...this.state,
-            [original]: Object.keys(this.state[original]).reduce((result, key) => {
-                return {
-                    ...result,
-                    [key]: !isAllSelected
-                }
-            }, {})
-        })
-    }*/
-
-    setParentState(newState) {
-        this.setState({
-            ...this.state,
-            ...newState
-        })
-    }
-
-    setParentStateAsync(newState) {
-        return new Promise(resolve =>
-            resolve(this.setState({...this.state, ...newState}))
-        )
-    }
-
-    toggleSearch() {
-        this.setState({
-            ...this.state,
-            isShowSearch: !this.state.isShowSearch
-        })
-    }
-
-    toggleMap() {
-        this.setState({
-            ...this.state,
-            isShowMap: !this.state.isShowMap
-        })
     }
 
     render() {
@@ -125,8 +36,24 @@ class Home extends Component {
             isShowSearch,
             lat,
             lng,
-            address
-        } = this.state
+            address,
+            toggleMap,
+            toggleSearch,
+            setShowCluster,
+            setLocation,
+            setItemList,
+            setAddress,
+            setSearchOption,
+            setClusterList,
+            routeTo,
+            saveMapState,
+            map,
+            clusterer,
+            level,
+            isNoMap
+        } = this.props
+
+        const length = isShowClusterList ? clusterList.length : itemList.length
 
         return (
             <Fragment>
@@ -134,22 +61,29 @@ class Home extends Component {
                     <div className="header_jh" style={{position: 'fixed'}}>
 
                         {!isShowMap && <Fragment>
-                            {itemList.length}개의 고시원
+                            {length}개의 고시원
                             <div className="header_jh_left">
                                 <img src="img/back_btn.png" align="absmiddle" width="52px" height="52px"
-                                     onClick={this.toggleMap}/>
+                                     onClick={() => {
+                                         routeTo('/')
+                                     }}/>
                             </div>
                         </Fragment>}
-                        {isShowMap && <img src="/img/logo.png" align="absmiddle" width="105px" height="23px"  style={{marginTop: '15px'}}/>}
+                        {isShowMap && <img src="/img/logo.png" align="absmiddle" width="105px" height="23px"
+                                           style={{marginTop: '15px'}}/>}
                         <div className="header_jh_right">
                             <img src="/img/search_btn.png" align="absmiddle" width="52px" height="52px"
-                                 onClick={this.toggleSearch}/>
+                                 onClick={toggleSearch}/>
                         </div>
                     </div>
-                    <div style={getStyle(isShowMap)}>
+                    {!isNoMap && <div style={getStyle(isShowMap)}>
                         <MapContainer
-                            setParentState={this.setParentState}
-                            setParentStateAsync={this.setParentStateAsync}
+                            level={level}
+                            isShowMap={isShowMap}
+                            setShowCluster={setShowCluster}
+                            setLocation={setLocation}
+                            setItemList={setItemList}
+                            setAddress={setAddress}
                             isShowClusterList={isShowClusterList}
                             itemList={itemList}
                             priceRange={priceRange}
@@ -157,18 +91,25 @@ class Home extends Component {
                             lat={lat}
                             lng={lng}
                             address={address}
+                            setClusterList={setClusterList}
+                            saveMapState={saveMapState}
+                            map={map}
+                            clusterer={clusterer}
                         />
-                    </div>
+                    </div>}
 
-                    <ClusterListContainer setParentState={this.setParentState}
-                                          isShowClusterList={isShowClusterList}
+                    <ClusterListContainer isShowClusterList={isShowClusterList}
                                           clusterList={clusterList}
                                           isShowMap={isShowMap}
-                                          itemList={itemList}/>
+                                          isNoMap={isNoMap}
+                                          itemList={itemList}
+                                          setShowCluster={setShowCluster}/>
                 </div>
 
                 <div style={getStyle(isShowSearch)}>
-                    <SearchContainer setParentState={this.setParentState}
+                    <SearchContainer setSearchOption={setSearchOption}
+                                     toggleMap={toggleMap}
+                                     toggleSearch={toggleSearch}
                                      priceRange={priceRange}
                                      options={options}
                     />
@@ -178,6 +119,28 @@ class Home extends Component {
     }
 }
 
-Home.propTypes = {};
+Home.propTypes = {
+    isNoMap: PropTypes.bool
+};
 
-export default Home;
+Home.defaultProps = {
+    isNoMap: false
+}
+
+export default connect(
+    state => ({
+        ...getHomeState(state)
+    }),
+    {
+        setSearchOption,
+        setShowCluster,
+        setLocation,
+        setItemList,
+        setClusterList,
+        setAddress,
+        toggleSearch,
+        toggleMap,
+        routeTo,
+        saveMapState
+    }
+)(Home);

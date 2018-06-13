@@ -39,11 +39,11 @@ class NameTagContainer extends Component {
                 <div className="detail_cell_under">
                     <div className="fifty" onClick={toggleFavorite}>
                         <img align="absmiddle" width="19px" height="17px" style={{verticalAlign: 'middle'}}
-                             ng-src="img/pink_heart.png" src="img/pink_heart.png"/> &nbsp;
+                             ng-src="/img/pink_heart.png" src="/img/pink_heart.png"/> &nbsp;
                         <span style={{color: '#6d6e71'}}>찜하기</span>
                     </div>
                     <div className="fifty2" onClick={toggleShare}>
-                        <img src="img/share.png" align="absmiddle" width="19px" height="17px"
+                        <img src="/img/share.png" align="absmiddle" width="19px" height="17px"
                              style={{verticalAlign: 'middle'}}/> &nbsp; 공유하기
                     </div>
                 </div>

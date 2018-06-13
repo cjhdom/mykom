@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import 'whatwg-fetch'
 import {AppContainer} from 'react-hot-loader'
-import { routerReducer, routerMiddleware } from 'react-router-redux'
+import {routerReducer, routerMiddleware} from 'react-router-redux'
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
+import {createBrowserHistory as createHistory} from 'history'
 import thunk from 'redux-thunk'
 
 import reducers from './reducers'
@@ -15,13 +16,41 @@ if (process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production' || 
     devTools = a => a;
 }
 
+window.onerror = () => {}
+
 const history = createHistory()
 const store = createStore(
     combineReducers({
         ...reducers,
         router: routerReducer
     }),
-    {},
+    {
+        home: {
+            isShowMap: true,
+            priceRange: {
+                priceMin: '',
+                priceMax: ''
+            },
+            options: {
+                isParking: false,
+                isMeal: false,
+                isSeparate: false,
+                isRestRoom: false
+            },
+            isShowClusterList: false,
+            isShowSearch: false,
+            clusterList: [],
+            itemList: [],
+            totalPages: 0,
+            address: ''
+        },
+        view: {
+            success: false,
+            data: null,
+            isQuestionPopup: false,
+            isImagePopup: false
+        }
+    },
     compose(applyMiddleware(thunk, routerMiddleware(history)), devTools)
 )
 

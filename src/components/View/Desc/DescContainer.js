@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class DescContainer extends Component {
     render() {
-        const {desc} = this.props
+        const {desc, toggleShowDescription} = this.props
         const shortDesc = desc.substring(0, 80)
         const postFix = desc.length > 80 && ' ....'
         return (
@@ -16,8 +16,8 @@ class DescContainer extends Component {
                 </div>
 
                 <div className="road_view">
-                    <img src="img/see_detail.png" align="absmiddle" width="80px" height="39px"
-                         ng-click="doShowDescription()"/>
+                    <img src="/img/see_detail.png" align="absmiddle" width="80px" height="39px"
+                         onClick={toggleShowDescription}/>
                 </div>
                 <div className="road_view_under"/>
 
@@ -31,7 +31,7 @@ class DescContainer extends Component {
 
                 <div className="road_view"
                      ng-click="go('app.singo', {kosiwonId: model._id, kosiwonName: model.kosiwonName})">
-                    <img src="img/red.png" align="absmiddle" width="18px" height="30px"
+                    <img src="/img/red.png" align="absmiddle" width="18px" height="30px"
                          style={{marginTop: '1px', verticalAlign: 'top'}}/> &nbsp;&nbsp;<span
                     style={{fontSize: '12px'}}><font color="red">허위 정보 신고</font></span>
                 </div>

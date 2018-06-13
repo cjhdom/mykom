@@ -10,9 +10,7 @@ class AddressContainer extends Component {
     }
 
     onChange(address) {
-        this.props.setParentState({
-            address
-        })
+        this.props.setAddress(address)
     }
 
     render() {

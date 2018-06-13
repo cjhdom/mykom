@@ -65,11 +65,11 @@ class OptionContainer extends Component {
                 </div>
                 <div className="option_jh">
                     <p>내부 옵션</p>
-                    {optionDesk && <img src="img/desk.png" align="absmiddle"/>}
-                    {optionBed && <img src="img/bed.png" align="absmiddle"/>}
-                    {optionCloset && <img src="img/suitcase.png" align="absmiddle"/>}
-                    {optionRefrigerator && <img src="img/refrigerator.png" align="absmiddle"/>}
-                    {optionAircon && <img src="img/airconditioner.png" align="absmiddle"/>}
+                    {optionDesk && <img src="/img/desk.png" align="absmiddle"/>}
+                    {optionBed && <img src="/img/bed.png" align="absmiddle"/>}
+                    {optionCloset && <img src="/img/suitcase.png" align="absmiddle"/>}
+                    {optionRefrigerator && <img src="/img/refrigerator.png" align="absmiddle"/>}
+                    {optionAircon && <img src="/img/airconditioner.png" align="absmiddle"/>}
                 </div>
                 <div className="road_view_under"/>
             </Fragment>

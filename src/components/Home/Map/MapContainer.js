@@ -13,7 +13,6 @@ const parseOptions = options => {
     })).filter(_ => _.value)
 }
 
-
 class MapContainer extends Component {
     constructor(props) {
         super(props);
@@ -24,12 +23,20 @@ class MapContainer extends Component {
         this.initMapCityLevel = 9;
         this.initMapSearchLevel = 6;
 
+        this.state = {
+            lat: null,
+            lng: null
+        }
+
         this.handleSelect = this.handleSelect.bind(this)
         this.getCurrentLocation = this.getCurrentLocation.bind(this)
+        this.clusterClick = this.clusterClick.bind(this)
+        this.setClusterList = this.setClusterList.bind(this)
+        this.setlocation = this.setlocation.bind(this)
     }
 
-    async componentDidUpdate(prevProps) {
-        if (prevProps.isShowClusterList !== this.props.isShowClusterList) {
+    async componentDidUpdate(prevProps, prevState) {
+        if (prevProps.isShowClusterList !== this.props.isShowClusterList || prevProps.isShowMap !== this.props.isShowMap) {
             this.setHeight()
         }
         if (prevProps.lat !== this.props.lat || prevProps.lng !== this.props.lng ||
@@ -38,27 +45,53 @@ class MapContainer extends Component {
         }
     }
 
+    componentWillUnmount() {
+        let {isShowMap} = this.props
+        if (isShowMap && this.map) {
+            var position = this.map.getCenter();
+            const newLat = position.getLat()
+            const newLng = position.getLng()
+            const level = this.map.getLevel()
+            this.props.saveMapState({lat: newLat, lng: newLng, level})
+        }
+    }
+
     componentDidMount() {
-        const {longitude, latitude} = defaultPosition
+        let {longitude, latitude} = defaultPosition
+        let initMapDoLevel = this.initMapDoLevel
+        let isReInit = false
+
+        const {lat, lng, level} = this.props
+        if (lat && lng && level) {
+            longitude = lng
+            latitude = lat
+            initMapDoLevel = level
+            isReInit = true
+        }
 
         const latLng = new daum.maps.LatLng(latitude, longitude)
 
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+
         var options = { //지도를 생성할 때 필요한 기본 옵션
             center: latLng, //지도의 중심좌표.
-            level: this.initMapDoLevel //지도의 레벨(확대, 축소 정도)
+            level: initMapDoLevel //지도의 레벨(확대, 축소 정도)
         };
-        if (latLng && latLng.ib !== 0) {
-            options.center = latLng;
-        }
 
         this.map = new daum.maps.Map(container, options); //지도 생성 및 객체 리턴
-        this.map.panTo(options.center);
+        window.map = this.map
 
-        daum.maps.event.addListener(this.map, 'dragend', () => {
+        setTimeout(() => {
+            this.map.setCenter(new daum.maps.LatLng(latitude, longitude))
+        }, 0)
+
+        daum.maps.event.addListener(this.map, 'dragend', async () => {
+            const center = this.map.getCenter()
             var position = this.map.getCenter();
             if (this.map.getLevel() < this.initMapCityLevel - 1) {
-                this.doSearch(position.getLat(), position.getLng(), null);
+                const lat = position.getLat()
+                const lng = position.getLng()
+                await this.doSearch(lat, lng, null);
             }
             this.doToggleClusterList(false)
         });
@@ -68,11 +101,11 @@ class MapContainer extends Component {
             // if(Consts.MODE === 'APP') cordova.plugins.Keyboard.close();
 
             const currentLevel = this.map.getLevel();
-            setTimeout(() => {
+            setTimeout(async () => {
                 this.clearCluster(true);
                 if (currentLevel < this.initMapCityLevel - 1) {
                     this.clearCityGroup();
-                    this.doSearch();
+                    await this.doSearch();
                 } else if (currentLevel > this.initMapCityLevel - 1) {
                     this.clearCityGroup();
                     this.showDoGroup();
@@ -85,18 +118,15 @@ class MapContainer extends Component {
         });
 
         daum.maps.event.addListener(this.map, 'click', (mouseEvent) => {
-            this.props.setParentState({
-                isShowClusterList: false
-            })
+            const center = this.map.getCenter()
+            //this.props.setShowCluster(false)
         });
 
         window.doClickCityOverlay = (index) => {
             this.map.setLevel(this.initMapCityLevel - 3);
             this.map.setCenter(customCityList[index].position);
             this.map.panTo(customCityList[index].position);
-            this.props.setParentState({
-                isShowClusterList: false
-            });
+            this.props.setShowCluster(false)
         }
 
         window.doClickDoOverlay = (index) => {
@@ -105,8 +135,14 @@ class MapContainer extends Component {
             this.map.panTo(customDoList[index].position);
         }
 
+
         this.showDoGroup()
         this.setHeight()
+
+        if (isReInit) {
+            this.createOrUpdateCluster()
+            this.map.relayout()
+        }
     }
 
     clearCityGroup() {
@@ -161,7 +197,7 @@ class MapContainer extends Component {
 
             });
         } else {
-            this.clusterer.removeMarkers(this.markers);
+            this.clearCluster()
         }
         var imageSrc = '/img/marker.png'; // 마커이미지의 주소입니다
         var imageSize = new daum.maps.Size(40, 40), // 마커이미지의 크기입니다
@@ -190,29 +226,15 @@ class MapContainer extends Component {
         });
 
         this.clusterer.addMarkers(this.markers);
-        daum.maps.event.addListener(this.clusterer, 'clusterclick', (cluster) => {
-            setTimeout(async () => {
-                await this.doClickCluster(cluster, true);
-            }, 200);
-        });
+        daum.maps.event.addListener(this.clusterer, 'clusterclick', this.clusterClick);
     }
 
     doToggleClusterList(isShowClusterList) {
-        this.props.setParentState({
-            isShowClusterList
-        })
-
+        this.props.setShowCluster(isShowClusterList)
         this.setHeight()
     }
 
-    doToggleClusterListAsync(isShowClusterList) {
-        return new Promise(resolve => {
-            return resolve(this.doToggleClusterList(isShowClusterList))
-        })
-    }
-
     async doClickCluster(cluster, isRefresh) {
-        await this.doToggleClusterListAsync(true)
         if (cluster) {
             this.currentCluster = cluster;
         }
@@ -254,7 +276,7 @@ class MapContainer extends Component {
             if (fetchResult.ok) {
                 const result = await fetchResult.json()
                 this.clusterList = result.items
-                this.updateResultList()
+                await this.setClusterList(result.items)
             }
         } catch (e) {
         }
@@ -262,27 +284,25 @@ class MapContainer extends Component {
         var level = this.map.getLevel();
         this.map.setLevel(level, {anchor: this.currentCluster.getCenter()});
         this.map.panTo(new daum.maps.LatLng(this.currentCluster.getCenter().jb, this.currentCluster.getCenter().ib));
-        //showClusterList(true);
+        this.props.setShowCluster(true);
     }
 
-    updateResultList() {
-        return this.props.setParentStateAsync({
-            clusterList: this.clusterList
-        })
+    async setClusterList(clusterList) {
+        return Promise.resolve(this.props.setClusterList(clusterList))
     }
 
     setHeight() {
         if (!this.props.isShowClusterList) {
-            $('#map').attr('style', 'width: 100%; height: ' + (window.innerHeight - 53 - 52) + 'px;');
+            //$('#map_canvas').attr('style', 'top: 53px; over-flow:hidden; width: 100%; height: ' + (window.innerHeight - 53 - 52) + 'px;');
+            $('#map').attr('style', 'position: absolute; top: 53px; width: 100%; height: ' + (window.innerHeight - 53 - 52) + 'px;');
         } else {
-            $('#map').attr('style', 'width: 100%; height: ' + (window.innerHeight - 53 - 52 - 240) + 'px;');
+            //$('#map_canvas').attr('style', 'top: 53px; over-flow:hidden; width: 100%; height: ' + (window.innerHeight - 53 - 52 - 240) + 'px;');
+            $('#map').attr('style', 'position: absolute; top: 53px; width: 100%; height: ' + (window.innerHeight - 53 - 52 - 240) + 'px;');
         }
         this.map && this.map.relayout()
     }
 
     async doClickMarker(marker) {
-        await this.doToggleClusterListAsync(true)
-
         this.idArrayList = [];
         this.idArrayList.push(marker.kosiwon._id);
 
@@ -314,22 +334,22 @@ class MapContainer extends Component {
                 const result = await fetchResult.json()
                 this.clusterList = [];
                 this.clusterList.push(result.items[0]);
-
-                this.updateResultList()
+                await this.setClusterList(result.items)
             }
         } catch (e) {
 
         }
+        this.props.setShowCluster(true);
+    }
+
+    async clusterClick(cluster) {
+        await this.doClickCluster(cluster, true);
     }
 
     clearCluster() {
         if (!this.clusterer) return;
 
-        daum.maps.event.removeListener(this.clusterer, 'clusterclick', (cluster) => {
-            setTimeout(() => {
-                this.doClickCluster(cluster, true);
-            }, 200);
-        });
+        daum.maps.event.removeListener(this.clusterer, 'clusterclick', this.clusterClick);
         this.clusterer.removeMarkers(this.markers);
         this.map.relayout();
     }
@@ -439,9 +459,7 @@ class MapContainer extends Component {
             })
 
             const result = await searchFetch.json()
-            await this.props.setParentStateAsync({
-                itemList: result.items
-            })
+            await this.props.setItemList(result.items)
 
             this.map.setLevel(this.initMapSearchLevel)
 
@@ -455,33 +473,42 @@ class MapContainer extends Component {
         }
     }
 
-    async setStateAsync(newState) {
-        return new Promise(resolve => (
-            resolve(this.setState({
-                ...this.state,
-                ...newState
-            }))
-        ))
+    async setItemList(itemList) {
+        return Promise.resolve(this.props.setItemList(itemList))
     }
 
     handleSelect() {
-        const {setParentState, address} = this.props
+        const {setLocation, address} = this.props
         if (!address) {
-            setParentState({
+            setLocation({
                 lat: 37.55375859999999,
                 lng: 126.98096959999998
             })
         } else {
             geocodeByAddress(address)
                 .then(results => getLatLng(results[0]))
-                .then(latLng => setParentState({
+                .then(latLng => setLocation({
                     lat: latLng.lat,
                     lng: latLng.lng
                 }))
         }
     }
 
-    getCurrentLocation () {
+    setlocation(position) {
+        if (position) {
+            this.setState({
+                ...position
+            })
+        } else {
+            var position = this.map.getCenter();
+            this.setState({
+                lat: position.getLat(),
+                lng: position.getLng()
+            })
+        }
+    }
+
+    getCurrentLocation() {
         const geolocation = window.navigator && window.navigator.geolocation
         if (geolocation) {
             geolocation.getCurrentPosition(async position => {
@@ -494,22 +521,28 @@ class MapContainer extends Component {
     }
 
     render() {
-        const {setParentState, address} = this.props
+        const {setAddress, address} = this.props
         return (
-            <div className="map_canvas"
-                 style={{top: '53px', overflow: 'hidden', height: window.innerHeight - 53 - 52}}>
+            <div id="map_canvas"
+                 style={{top: '53px', overflow: 'hidden'}}>
 
                 <div id="map" align="absmiddle"
-                     style={{width: '100%', height: window.innerHeight - 53 - 52, overflow: 'hidden'}}/>
+                     style={{
+                         top: '53px',
+                         position: 'absolute',
+                         width: '100%',
+                         height: window.innerHeight - 53 - 52,
+                         overflow: 'hidden'
+                     }}/>
 
-                <div className="place_btn" onClick={this.getCurrentLocation}>
+                <div className="place_btn" onClick={this.getCurrentLocation} style={{top: '73px'}}>
                     <img src="img/place.png" align="absmiddle" width="18px" height="18px" style={{marginTop: '-5px'}}/>
                 </div>
 
-                <div className="place_search">
+                <div className="place_search" style={{top: '73px'}}>
                     <img src="img/magnify.png" onClick={this.handleSelect} align="absmiddle" width="16px" height="15px"
                          style={{position: 'absolute', top: '8px', left: '10px'}}/>
-                    <AddressContainer setParentState={setParentState}
+                    <AddressContainer setAddress={setAddress}
                                       address={address}
                                       handleSelect={this.handleSelect}/>
                 </div>

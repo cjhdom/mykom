@@ -1,4 +1,20 @@
-export const SET_PRICE_RANGE = 'SET_PRICE_RANGE'
+export const SET_SEARCH_OPTION = 'SET_SEARCH_OPTION'
+
+export const SET_SHOW_CLUSTER = 'SET_SHOW_CLUSTER'
+
+export const SET_LOCATION = 'SET_LOCATION'
+
+export const SET_ITEM_LIST = 'SET_ITEM_LIST'
+
+export const SET_CLUSTER_LIST = 'SET_CLUSTER_LIST'
+
+export const SET_ADDRESS = 'SET_ADDRESS'
 
 export const TOGGLE_SEARCH = 'TOGGLE_SEARCH'
+
+export const TOGGLE_MAP = 'TOGGLE_MAP'
+
+export const SAVE_MAP_STATE = 'SAVE_MAP_STATE'
+
+export const SET_VIEW_DATA = 'SET_VIEW_DATA'
 

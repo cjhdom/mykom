@@ -46,7 +46,7 @@ class ViewMapContainer extends Component {
                     <div id="location_map" align="absmiddle" style={{height: '270px'}}/>
                 </div>
                 <div className="road_view" ng-click="go('app.road_view')">
-                    <img src="img/road_view.png" align="absmiddle" width="106px" height="39px"/>
+                    <img src="/img/road_view.png" align="absmiddle" width="106px" height="39px"/>
                 </div>
                 <div className="road_view_under"></div>
             </Fragment>

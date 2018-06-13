@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {setSearchOption} from "../../../acitons";
 
 const defaultState = {
     priceRange: {
@@ -27,9 +28,7 @@ class SearchContainer extends Component {
     }
 
     goBack() {
-        this.props.setParentState({
-            isShowSearch: false
-        })
+        this.props.toggleSearch()
     }
 
     handleOnChange(e) {
@@ -57,8 +56,8 @@ class SearchContainer extends Component {
     }
 
     applyFilter() {
-        const {setParentState} = this.props
-        setParentState({
+        const {setSearchOption} = this.props
+        setSearchOption({
             ...this.state,
             isShowSearch: false
         })

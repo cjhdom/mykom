@@ -1,5 +1,4 @@
 import React, {Component, Fragment} from 'react';
-import {EnumRoute} from '../../../data/consts'
 import {routeTo} from "../../../acitons";
 import {connect} from "react-redux";
 
@@ -16,26 +15,16 @@ const getListStyle = (isShowMap) => {
 class ClusterListContainer extends Component {
     constructor(props) {
         super(props);
-        this.toggleClusterList = this.toggleClusterList.bind(this)
-        this.toggleShowMap = this.toggleShowMap.bind(this)
     }
 
-    toggleClusterList() {
-        const {setParentState, isShowClusterList} = this.props
-        setParentState({
-            isShowClusterList: !isShowClusterList
-        })
+
+    componentDidMount() {
+        this.forceUpdate()
     }
 
-    toggleShowMap() {
-        const {setParentState, isShowMap} = this.props
-        setParentState({
-            isShowMap: !isShowMap
-        })
-    }
 
     render() {
-        const {isShowClusterList, clusterList, isShowMap, itemList, routeTo} = this.props
+        const {isShowClusterList, clusterList, isShowMap, isNoMap, itemList, routeTo, setShowCluster} = this.props
         const length = isShowClusterList ? clusterList.length : itemList.length
 
         return (
@@ -45,12 +34,12 @@ class ClusterListContainer extends Component {
                     {length > 0 && isShowClusterList &&
                     <img src={isShowClusterList ? 'img/main_down.png' : 'img/main_up.png'}
                          align="absmiddle" width="33px" height="33px"
-                         style={{position: 'absolute', top: '8px', left: '10px'}} onClick={this.toggleClusterList}/>}
+                         style={{position: 'absolute', top: '8px', left: '10px'}} onClick={() => setShowCluster(!isShowClusterList)}/>}
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>이 지역 고시원 {length}개
                     {length > 0 && isShowClusterList && <img src="/img/seeall.png" align="absmiddle" width="107px"
                                                              height="33px"
                                                              style={{position: 'absolute', top: '8px', right: '15px'}}
-                                                             onClick={this.toggleShowMap}/>}
+                                                             onClick={() => routeTo('/kosiwon-list')}/>}
                 </div>}
 
                 {isShowClusterList && <div className={isShowMap ? 'main_under_list' : 'main_under_list_all'}

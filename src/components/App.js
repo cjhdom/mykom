@@ -6,6 +6,7 @@ import {Route, Switch} from 'react-router-dom';
 import {ConnectedRouter} from 'react-router-redux'
 import KosiwonListContainer from "./KosiwonList/KosiwonListContainer";
 import ViewImageContainer from "./ViewImage/ViewImageContainer";
+import ReportContainer from "./Report/ReportContainer";
 
 const App = ({store, history}) => {
     return (
@@ -16,6 +17,7 @@ const App = ({store, history}) => {
                     <Route path="/kosiwon-list" component={KosiwonListContainer}/>
                     <Route path="/view/:id" component={View}/>
                     <Route path="/view-image/:id/:pageNo" component={ViewImageContainer}/>
+                    <Route path="/report/:id/:kosiwonName" component={ReportContainer}/>
                     {/*<Route exact path="/view/:id/image" component={View}/>*/}
                 </Switch>
             </ConnectedRouter>

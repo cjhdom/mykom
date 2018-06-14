@@ -21,6 +21,7 @@ class View extends Component {
         this.toggleShowDescription = this.toggleShowDescription.bind(this)
         this.openHomepage = this.openHomepage.bind(this)
         this.toggleShowQuestion = this.toggleShowQuestion.bind(this)
+        this.reportKosiwon = this.reportKosiwon.bind(this)
     }
 
     async componentDidMount() {
@@ -28,6 +29,17 @@ class View extends Component {
         const {id} = this.props.match.params
         if (prevId !== id) {
             await this.getData(id)
+        }
+    }
+
+    reportKosiwon() {
+        const {success} = this.props
+        if (success) {
+            const {
+                _id,
+                kosiwonName
+            } = this.props.data
+            this.props.history.push(`/report/${_id}/${kosiwonName}`)
         }
     }
 
@@ -85,7 +97,8 @@ class View extends Component {
         const {routeTo} = this.props
         const {
             success,
-            isImagePopup
+            isImagePopup,
+            index
         } = this.props
         if (success) {
             const {isShowDescription, isShowQuestion} = this.state
@@ -169,8 +182,7 @@ class View extends Component {
                     </div>}
 
                     {(isShowQuestion || isShowDescription) &&
-                    <div className="dark_wall"
-                         ng-show="vars.isQuestionPopup || vars.isSharePopup || vars.isDetailPopup"/>}
+                    <div className="dark_wall"/>}
 
                     <div className="c4 scroll-view ionic-scroll overflow-scroll scroll-y"
                          style={{
@@ -182,7 +194,8 @@ class View extends Component {
                         {success && <div className="scroll">
                             <ImageSwiperContainer imageList={imageList}
                                                   routeTo={routeTo}
-                                                  id={_id}/>
+                                                  id={_id}
+                                                  index={index}/>
                             <NameTagContainer kosiwonName={kosiwonName}
                                               priceMin={priceMin}
                                               priceMax={priceMax}
@@ -209,7 +222,8 @@ class View extends Component {
                                              optionRefrigerator={optionRefrigerator}
                                              optionAircon={optionAircon}/>
                             <DescContainer desc={description}
-                                           toggleShowDescription={this.toggleShowDescription}/>
+                                           toggleShowDescription={this.toggleShowDescription}
+                                           reportKosiwon={this.reportKosiwon}/>
                         </div>}
                     </div>
                     <div style={{bottom: '0px', position: 'fixed', height: '52px', zIndex: '10000'}}>

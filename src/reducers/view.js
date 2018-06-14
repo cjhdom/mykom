@@ -8,6 +8,11 @@ const view = (state = {}, action) => {
                 success: action.success,
                 data: action.data
             }
+        case ActionTypes.SET_IMAGE_INDEX:
+            return {
+                ...state,
+                index: action.index
+            }
         default:
             return state
     }

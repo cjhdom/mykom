@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import ImageView from "./ImageView";
-import {routeTo} from "../../../acitons";
+import {routeTo, setImageIndex} from "../../../acitons";
+import {connect} from "react-redux";
 
 class ImageSwiperContainer extends Component {
     render() {
-        const {imageList, id, pageNo} = this.props
+        const {imageList, id, pageNo, index} = this.props
         let {routeTo} = this.props
 
         if (!routeTo) {
@@ -28,7 +29,8 @@ class ImageSwiperContainer extends Component {
             arrows: false,
             adaptiveHeight: false,
             swipeToSlide: true,
-            initialSlide: pageNo || 0
+            initialSlide: pageNo || index || 0,
+            afterChange: ((i) => this.props.setImageIndex(i)).bind(this)
         };
         return (
             <ImageView settings={settings}
@@ -41,4 +43,9 @@ class ImageSwiperContainer extends Component {
 
 ImageSwiperContainer.propTypes = {};
 
-export default ImageSwiperContainer;
+export default connect(
+    () => ({}),
+    {
+        setImageIndex
+    }
+)(ImageSwiperContainer);

@@ -536,11 +536,11 @@ class MapContainer extends Component {
                      }}/>
 
                 <div className="place_btn" onClick={this.getCurrentLocation} style={{top: '73px'}}>
-                    <img src="img/place.png" align="absmiddle" width="18px" height="18px" style={{marginTop: '-5px'}}/>
+                    <img src="/img/place.png" align="absmiddle" width="18px" height="18px" style={{marginTop: '-5px'}}/>
                 </div>
 
                 <div className="place_search" style={{top: '73px'}}>
-                    <img src="img/magnify.png" onClick={this.handleSelect} align="absmiddle" width="16px" height="15px"
+                    <img src="/img/magnify.png" onClick={this.handleSelect} align="absmiddle" width="16px" height="15px"
                          style={{position: 'absolute', top: '8px', left: '10px'}}/>
                     <AddressContainer setAddress={setAddress}
                                       address={address}

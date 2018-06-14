@@ -18,3 +18,5 @@ export const SAVE_MAP_STATE = 'SAVE_MAP_STATE'
 
 export const SET_VIEW_DATA = 'SET_VIEW_DATA'
 
+export const SET_IMAGE_INDEX = 'SET_IMAGE_INDEX'
+

@@ -57,3 +57,8 @@ export const setViewData = ({
     success,
     data
 })
+
+export const setImageIndex = index => ({
+    type: ActionTypes.SET_IMAGE_INDEX,
+    index
+})

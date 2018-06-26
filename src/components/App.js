@@ -8,6 +8,7 @@ import KosiwonListContainer from "./KosiwonList/KosiwonListContainer";
 import ViewImageContainer from "./ViewImage/ViewImageContainer";
 import ReportContainer from "./Report/ReportContainer";
 import RoadViewContainer from "./RoadView/RoadViewContainer";
+import MapViewContainer from "./MapView/MapViewContainer";
 
 const App = ({store, history}) => {
     return (
@@ -19,6 +20,7 @@ const App = ({store, history}) => {
                     <Route path="/view/:id" component={View}/>
                     <Route path="/view-image/:id/:pageNo" component={ViewImageContainer}/>
                     <Route path="/road-view" component={RoadViewContainer}/>
+                    <Route path="/map-view" component={MapViewContainer}/>
                     <Route path="/report/:id/:kosiwonName" component={ReportContainer}/>
                 </Switch>
             </ConnectedRouter>

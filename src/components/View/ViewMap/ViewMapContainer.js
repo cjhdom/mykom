@@ -7,24 +7,25 @@ const initMap = (kosiwonName, location) => {
     const options = { //지도를 생성할 때 필요한 기본 옵션
         center: new daum.maps.LatLng(location[1], location[0]), //지도의 중심좌표.
         level: 4, //지도의 레벨(확대, 축소 정도)
-        draggable: false
+        draggable: false,
+        disableDoubleClick: true,
+        disableDoubleClickZoom: true
     };
     const map = new daum.maps.Map(container, options); //지도 생성 및 객체 리턴
 
-    const marker = new daum.maps.Marker({
+    /*const marker = new daum.maps.Marker({
         position: new daum.maps.LatLng(location[1], location[0])
     });
 
-    map.setDraggable(true);
-    marker.setMap(map);
+    //map.setDraggable(true);
+    marker.setMap(map);*/
 
-    const iwContent = '<div style="padding:5px;">' + kosiwonName + '</div>';
-    const iwPosition = new daum.maps.LatLng(location[1], location[0]); //인포윈도우 표시 위치입니다
-
-    const infowindow = new daum.maps.InfoWindow({
-        position: iwPosition,
-        content: iwContent
+    var content = '<div class="detail_map_spot"></div>';
+    var customOverlay = new daum.maps.CustomOverlay({
+        position: options.center,
+        content: content
     });
+    customOverlay.setMap(map);
 }
 
 class ViewMapContainer extends Component {
@@ -36,19 +37,20 @@ class ViewMapContainer extends Component {
 
     render() {
         const {
-            kosiwonAddress,
-            location
+            kosiwonAddress
         } = this.props
         return (
             <Fragment>
                 <div className="place_info_cell">
                     {kosiwonAddress}
                 </div>
-                <div className="detail_map_canvas" ng-click="go('app.map')">
-                    <div id="location_map" align="absmiddle" style={{height: '270px'}}/>
-                </div>
-                <Link to='/road-view'>
-                    <div className="road_view" ng-click="go('app.road_view')">
+                <Link to="/map-view">
+                    <div className="detail_map_canvas">
+                        <div id="location_map" align="absmiddle" style={{height: '270px'}}/>
+                    </div>
+                </Link>
+                <Link to="/road-view">
+                    <div className="road_view">
                         <img src="/img/road_view.png" align="absmiddle" width="106px" height="39px"/>
                     </div>
                 </Link>

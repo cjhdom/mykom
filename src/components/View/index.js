@@ -1,5 +1,4 @@
 import React, {Component, Fragment} from 'react';
-import PropTypes from 'prop-types';
 import ImageSwiperContainer from "./ImageSwiper/ImageSwiperContainer";
 import NameTagContainer from "./NameTag/NameTagContainer";
 import ViewMapContainer from "./ViewMap/ViewMapContainer";
@@ -7,7 +6,7 @@ import OptionContainer from "./Option/OptionContainer";
 import DescContainer from "./Desc/DescContainer";
 import {connect} from "react-redux";
 import {routeTo} from "../../acitons/index";
-import {EnumRoute, fetchHeader} from "../../data/consts";
+import {fetchHeader} from "../../data/consts";
 import {getId} from "../../reducers/index";
 import {setViewData} from "../../acitons";
 
@@ -22,6 +21,10 @@ class View extends Component {
         this.openHomepage = this.openHomepage.bind(this)
         this.toggleShowQuestion = this.toggleShowQuestion.bind(this)
         this.reportKosiwon = this.reportKosiwon.bind(this)
+    }
+
+    componentWillUnmount() {
+
     }
 
     async componentDidMount() {
@@ -97,7 +100,6 @@ class View extends Component {
         const {routeTo} = this.props
         const {
             success,
-            isImagePopup,
             index
         } = this.props
         if (success) {
@@ -133,7 +135,7 @@ class View extends Component {
                     <div className="header_jh" style={{position: 'absolute'}}>
                         <div className="header_jh_left">
                             <img src="/img/back_btn.png" align="absmiddle" width="52px" height="52px"
-                                 onClick={() => routeTo(EnumRoute.main)}/>
+                                 onClick={() => this.props.history.push('/')}/>
                         </div>
                         <img src="/img/logo.png" align="absmiddle" width="105px" height="23px"
                              style={{marginTop: '15px'}}/>

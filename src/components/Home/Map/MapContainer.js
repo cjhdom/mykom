@@ -106,7 +106,7 @@ class MapContainer extends Component {
                 if (currentLevel < this.initMapCityLevel - 1) {
                     this.clearCityGroup();
                     await this.doSearch();
-                } else if (currentLevel > this.initMapCityLevel - 1) {
+                } else if (currentLevel > this.initMapCityLevel) {
                     this.clearCityGroup();
                     this.showDoGroup();
                 } else if (currentLevel === this.initMapCityLevel - 1
@@ -118,8 +118,7 @@ class MapContainer extends Component {
         });
 
         daum.maps.event.addListener(this.map, 'click', (mouseEvent) => {
-            const center = this.map.getCenter()
-            //this.props.setShowCluster(false)
+            this.props.setShowCluster(false)
         });
 
         window.doClickCityOverlay = (index) => {

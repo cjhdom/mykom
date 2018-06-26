@@ -29,12 +29,12 @@ class DescContainer extends Component {
                 </div>
                 <div className="road_view_under"/>
 
-                <div className="road_view"
+                {/*<div className="road_view"
                      onClick={reportKosiwon}>
                     <img src="/img/red.png" align="absmiddle" width="18px" height="30px"
                          style={{marginTop: '1px', verticalAlign: 'top'}}/> &nbsp;&nbsp;<span
                     style={{fontSize: '12px'}}><font color="red">허위 정보 신고</font></span>
-                </div>
+                </div>*/}
                 <div className="road_view_under"/>
             </Fragment>
         );

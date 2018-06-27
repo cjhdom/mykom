@@ -21,13 +21,13 @@ class DescContainer extends Component {
                 </div>
                 <div className="road_view_under"/>
 
-                <div className="road_view">
+                {/*<div className="road_view">
                     <a href="tel:02-911-9051" style={{textDecoration: 'none', color: 'black', verticalAlign: 'middle'}}>
                         <i className="icon ion-ios-telephone" style={{fontSize: '1em'}}/> &nbsp;<b
                         style={{fontSize: '.9em'}}>고시락 고객센터</b>
                     </a>
                 </div>
-                <div className="road_view_under"/>
+                <div className="road_view_under"/>*/}
 
                 {/*<div className="road_view"
                      onClick={reportKosiwon}>

@@ -123,8 +123,7 @@ class SearchContainer extends Component {
                             </div>
                             <div className="form2">
                                 <div className="form2_cell">
-                                    <span ng-style="{color: vars.isParking ? '#ff9999' : '#cccccc'}"
-                                          style={{color: 'rgb(204, 204, 204)'}}>
+                                    <span style={{color: isParking ? '#ff9999' : '#cccccc'}}>
                                         주차 가능
                                     </span>
                                     <div style={{position: 'absolute', top: '-1px', right: '0px'}}>
@@ -138,8 +137,7 @@ class SearchContainer extends Component {
                                     </div>
                                 </div>
                                 <div className="form2_cell">
-                                    <span ng-style="{color: vars.isMeal ? '#ff9999' : '#cccccc'}"
-                                          style={{color: 'rgb(204, 204, 204)'}}>
+                                    <span style={{color: isMeal ? '#ff9999' : '#cccccc'}}>
                                         식사제공
                                     </span>
                                     <div style={{position: 'absolute', top: '-1px', right: '0px'}}>
@@ -153,8 +151,7 @@ class SearchContainer extends Component {
                                     </div>
                                 </div>
                                 <div className="form2_cell">
-                                    <span ng-style="{color: vars.isSeparate ? '#ff9999' : '#cccccc'}"
-                                          style={{color: 'rgb(204, 204, 204)'}}>
+                                    <span style={{color: isSeparate ? '#ff9999' : '#cccccc'}}>
                                         남녀층 분리
                                     </span>
                                     <div style={{position: 'absolute', top: '-1px', right: '0px'}}>
@@ -168,8 +165,7 @@ class SearchContainer extends Component {
                                     </div>
                                 </div>
                                 <div className="form2_cell_last">
-                                    <span ng-style="{color: vars.isRestRoom ? '#ff9999' : '#cccccc'}"
-                                          style={{color: 'rgb(204, 204, 204)'}}>
+                                    <span style={{color: isRestRoom ? '#ff9999' : '#cccccc'}}>
                                         개별화장실
                                     </span>
                                     <div style={{position: 'absolute', top: '-1px', right: '0px'}}>

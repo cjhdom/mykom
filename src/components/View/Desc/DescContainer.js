@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class DescContainer extends Component {
     render() {
-        const {desc, toggleShowDescription, reportKosiwon} = this.props
+        const {desc, toggleShowDescription, kosiwonBlogUrl, goBlog, reportKosiwon} = this.props
         const shortDesc = desc.substring(0, 80)
         const postFix = desc.length > 80 && ' ....'
         return (
@@ -14,6 +14,8 @@ class DescContainer extends Component {
                         {shortDesc}{postFix}
 		 	        </span>
                 </div>
+
+                <div className="road_view_under"/>
 
                 <div className="road_view">
                     <img src="/img/see_detail.png" align="absmiddle" width="80px" height="39px"
@@ -35,7 +37,15 @@ class DescContainer extends Component {
                          style={{marginTop: '1px', verticalAlign: 'top'}}/> &nbsp;&nbsp;<span
                     style={{fontSize: '12px'}}><font color="red">허위 정보 신고</font></span>
                 </div>*/}
-                <div className="road_view_under"/>
+
+                {kosiwonBlogUrl && <Fragment>
+                    <div className="road_view" onClick={goBlog}>
+                        <img src="/img/red.png" align="absmiddle" width="18px" height="30px"
+                             style={{marginTop: '1px', verticalAlign: 'top'}}/> &nbsp;&nbsp;<span
+                        style={{fontSize: '12px'}}><font color="red">블로그 리뷰</font></span>
+                    </div>
+                    <div className="road_view_under"/>
+                </Fragment>}
             </Fragment>
         );
     }

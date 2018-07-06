@@ -21,10 +21,7 @@ class View extends Component {
         this.openHomepage = this.openHomepage.bind(this)
         this.toggleShowQuestion = this.toggleShowQuestion.bind(this)
         this.reportKosiwon = this.reportKosiwon.bind(this)
-    }
-
-    componentWillUnmount() {
-
+        this.goBlog = this.goBlog.bind(this)
     }
 
     async componentDidMount() {
@@ -43,6 +40,13 @@ class View extends Component {
                 kosiwonName
             } = this.props.data
             this.props.history.push(`/report/${_id}/${kosiwonName}`)
+        }
+    }
+
+    goBlog() {
+        const {kosiwonBlogUrl} = this.props.data
+        if (kosiwonBlogUrl) {
+            window.open(kosiwonBlogUrl)
         }
     }
 
@@ -128,7 +132,8 @@ class View extends Component {
                 floor,
                 intro,
                 kosiwonPhoneNo,
-                kosiwonVirtualNo
+                kosiwonVirtualNo,
+                kosiwonBlogUrl
             } = this.props.data
             return (
                 <Fragment>
@@ -224,8 +229,10 @@ class View extends Component {
                                              optionRefrigerator={optionRefrigerator}
                                              optionAircon={optionAircon}/>
                             <DescContainer desc={description}
+                                           kosiwonBlogUrl={kosiwonBlogUrl}
                                            toggleShowDescription={this.toggleShowDescription}
-                                           reportKosiwon={this.reportKosiwon}/>
+                                           reportKosiwon={this.reportKosiwon}
+                                           goBlog={this.goBlog}/>
                         </div>}
                     </div>
                     <div style={{bottom: '0px', position: 'fixed', height: '52px', zIndex: '10000'}}>

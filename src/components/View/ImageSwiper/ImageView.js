@@ -11,7 +11,7 @@ const ImageView = ({settings, imageList, routeTo, id}) => {
                         return (
                             <div className="slider-slide" key={i} onClick={() => routeTo(`/view-image/${id}/${i}`)}>
                                 <div className="detail_img">
-                                    <img src={`http://www.kosirock.co.kr${image.imageUri}`} className="detail_img"/>
+                                    <img src={`${image.imageUri}`} className="detail_img"/>
                                 </div>
                             </div>
                         )

@@ -63,7 +63,7 @@ class Home extends Component {
                         {!isShowMap && <Fragment>
                             {length}개의 고시원
                             <div className="header_jh_left">
-                                <img src="img/back_btn.png" align="absmiddle" width="52px" height="52px"
+                                <img src="/img/back_btn.png" align="absmiddle" width="52px" height="52px"
                                      onClick={() => {
                                          routeTo('/')
                                      }}/>

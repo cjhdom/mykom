@@ -49,7 +49,7 @@ class ClusterListContainer extends Component {
                             <div className="main_under_list_cell" onClick={() => routeTo(`/view/${data._id}`)}
                                  key={data._id}>
                                 <div style={{width: '120px', height: '105px', float: 'left', marginRight: '10px'}}>
-                                    <img src={data.thumbnailUri} align="absmiddle" width="100%" height="100%"/>
+                                    <img src={`http://kosirock.com/${data.thumbnailUri}`} align="absmiddle" width="100%" height="100%"/>
                                 </div>
                                 <div style={{width: '2%', height: '100%', float: 'left'}}>
 

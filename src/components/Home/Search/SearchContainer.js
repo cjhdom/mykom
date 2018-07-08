@@ -76,7 +76,7 @@ class SearchContainer extends Component {
                 <div className="header_jh">
                     검색필터 설정
                     <div className="header_jh_left">
-                        <img src="img/back_btn.png" align="absmiddle" width="52px" height="52px"
+                        <img src="/img/back_btn.png" align="absmiddle" width="52px" height="52px"
                              onClick={this.goBack}/>
                     </div>
 
@@ -184,7 +184,7 @@ class SearchContainer extends Component {
                 </div>
 
                 <div className="refresh" onClick={this.resetFilter}>
-                    <img src="img/refresh.png" align="absmiddle" width="33px" height="33px"
+                    <img src="/img/refresh.png" align="absmiddle" width="33px" height="33px"
                          style={{marginTop: '10px'}}/>
                 </div>
                 <div className="filter_apply" onClick={this.applyFilter}>

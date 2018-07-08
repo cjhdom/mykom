@@ -9,7 +9,7 @@ const devConf = {
     ],
 
     output: {
-        path: __dirname + '/public/www_m/',
+        path: __dirname + '/public',
         filename: 'bundle.js'
     },
 
@@ -64,7 +64,7 @@ const realConf = {
     ],
 
     output: {
-        path: __dirname + '/public/www/',
+        path: __dirname + '/public',
         filename: 'bundle.js'
     },
 

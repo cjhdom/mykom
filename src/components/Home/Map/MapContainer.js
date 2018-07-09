@@ -408,12 +408,12 @@ class MapContainer extends Component {
 
         let priceRangeParsed = []
 
-        if (priceRange.priceMin !== '') {
+        if (priceRange.priceMin !== '' || priceRange.priceMax !== '') {
             priceRangeParsed.push({
                 operator: '$lte',
                 type: 'number',
                 key: 'priceMin',
-                value: priceRange.priceMin
+                value: priceRange.priceMin || 0
             })
         }
 

@@ -3114,12 +3114,12 @@ hr {
 /**
  * Correct font family set oddly in Safari 5 and Chrome.
  */
-code,
+/*code,
 kbd,
 pre,
 samp {
   font-size: 1em;
-  font-family: monospace, serif; }
+  font-family: monospace, serif; }*/
 
 /**
  * Improve readability of pre-formatted text in all browsers.

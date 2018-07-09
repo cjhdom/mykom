@@ -56,7 +56,8 @@ ul.indicator li.slick-active a {border-color: #ff9999; background: #ff9999;}
   height:53px;
   border-bottom:1px solid #dddddd;
   background: #ffffff;
-  position:absolute;
+  position:fixed;
+  -webkit-transform: translateZ(0);
   top:0px;
   left:0px;
   text-align:center;
@@ -1298,6 +1299,9 @@ display          : block;
 
 }
 
+.default_thumbnail {
+  background: #fafafa url(../img/room_pic.jpg) center center no-repeat;
+}
 
 .question_pop {
 
@@ -1789,7 +1793,7 @@ display          : block;
 }
 
 .under_detail * {
-    margin: 0;
+    margin: 0px 2px;
     padding: 0;
     white-space: nowrap;
     text-overflow: ellipsis;

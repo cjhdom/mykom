@@ -10,7 +10,8 @@ class ImageSwiperContainer extends Component {
         let {routeTo} = this.props
 
         if (!routeTo) {
-            routeTo = () => {}
+            routeTo = () => {
+            }
         }
 
         const settings = {
@@ -29,15 +30,25 @@ class ImageSwiperContainer extends Component {
             arrows: false,
             adaptiveHeight: false,
             swipeToSlide: true,
-            initialSlide: pageNo || index || 0,
+            initialSlide: 0, //pageNo || index || 0, 요청에 의한 삭제
             afterChange: ((i) => this.props.setImageIndex(i)).bind(this)
         };
-        return (
-            <ImageView settings={settings}
-                       imageList={imageList}
-                       id={id}
-                       routeTo={routeTo}/>
-        )
+        if (imageList.length > 0) {
+            return (
+                <ImageView settings={settings}
+                           imageList={imageList}
+                           id={id}
+                           routeTo={routeTo}/>
+            )
+        } else {
+            return (
+                <div className="slider" style={{width: '100%', visibility: 'visible'}}>
+                    <div className="slider-slides">
+                        <img src="/img/detail_pic.png" className="detail_img"/>
+                    </div>
+                </div>
+            )
+        }
     }
 }
 

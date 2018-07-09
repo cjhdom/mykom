@@ -141,6 +141,7 @@ ul.indicator li.slick-active a {border-color: #ff9999; background: #ff9999;}
     padding-left: 15px;
     z-index:10000;
     box-sizing: border-box;
+    -webkit-transform: translateZ(0);
   }
 
   .place_btn {
@@ -157,7 +158,7 @@ ul.indicator li.slick-active a {border-color: #ff9999; background: #ff9999;}
     text-align:center;
     line-height:31px;
     z-index:10000;
-
+    -webkit-transform: translateZ(0);
   }
 
 
@@ -175,6 +176,7 @@ ul.indicator li.slick-active a {border-color: #ff9999; background: #ff9999;}
     z-index:10000;
     box-sizing: border-box;
     overflow: visible;
+    -webkit-transform: translateZ(0);
   }
 
   .place_search_input {
@@ -809,6 +811,7 @@ display          : block;
     padding-left:10%;
     border-bottom:1px solid #eeeeee;
     z-index:99999;
+    -webkit-transform: translateZ(0);
   }
 
   .main_under_list {
@@ -821,6 +824,7 @@ display          : block;
     overflow-y:scroll;
     background:white;
     z-index:99999;
+    -webkit-transform: translateZ(0);
   }
 
   .main_under_list_all {

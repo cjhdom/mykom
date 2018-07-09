@@ -535,7 +535,7 @@ class MapContainer extends Component {
                      }}/>
 
                 <div className="place_btn" onClick={this.getCurrentLocation} style={{top: '73px'}}>
-                    <img src="/img/place.png" align="absmiddle" width="18px" height="18px" style={{marginTop: '-5px'}}/>
+                    <img src="/img/place.png" align="absmiddle" width="18px" height="18px" style={{marginTop: '5px'}}/>
                 </div>
 
                 <div className="place_search" style={{top: '73px'}}>

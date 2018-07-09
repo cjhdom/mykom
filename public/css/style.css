@@ -130,7 +130,7 @@ ul.indicator li.slick-active a {border-color: #ff9999; background: #ff9999;}
   .main_under {
     width:100%;
     height:52px;
-    position:absolute;
+    position:fixed;
     bottom:0px;
     left:0px;
     border-top:1px solid #dddddd;
@@ -800,7 +800,7 @@ display          : block;
 .main_under2 {
     width:100%;
     height:52px;
-    position:absolute;
+    position:fixed;
     bottom:240px;
     left:0px;
     border-top:1px solid #cccccc;
@@ -818,7 +818,7 @@ display          : block;
 
     width:100%;
     height:240px;
-    position:absolute;
+    position:fixed;
     bottom:0px;
     left:0px;
     overflow-y:scroll;

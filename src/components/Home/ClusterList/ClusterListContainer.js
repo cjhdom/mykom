@@ -52,7 +52,7 @@ class ClusterListContainer extends Component {
                                 <div style={{width: '120px', height: '105px', float: 'left', marginRight: '10px'}}>
                                     <img src={`http://kosirock.com/${data.thumbnailUri}`} align="absmiddle" width="100%"
                                          height="100%"
-                                         onerror="this.onerror = null; this.src='/img/room_pic.jpg';"/>
+                                         onError="this.onerror = null; this.src='/img/room_pic.jpg';"/>
                                 </div>
                                 <div style={{width: '2%', height: '100%', float: 'left'}}>
 

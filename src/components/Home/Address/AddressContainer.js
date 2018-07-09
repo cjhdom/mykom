@@ -29,7 +29,7 @@ class AddressContainer extends Component {
         const inputProps = {
             value: this.props.address,
             onChange: this.onChange,
-            type: 'search',
+            type: 'text',
             name: 'search_bar',
             id: 'place',
             placeholder: '지역명, 지하철역명, 대학교명을 입력하세요.'

@@ -235,7 +235,7 @@ class View extends Component {
                                            goBlog={this.goBlog}/>
                         </div>}
                     </div>
-                    <div style={{bottom: '0px', position: 'fixed', height: '52px', zIndex: '10000', WebkitTransform: 'translateZ(0)'}}>
+                    <div style={{bottom: '0px', position: 'fixed', height: '52px', zIndex: '10000'}}>
                         <div className="question_50_left" onClick={this.openHomepage}>
                             <img src="/img/home.png" align="absmiddle" width="17px" height="18px"
                                  style={{verticalAlign: 'middle'}}/> &nbsp;홈페이지

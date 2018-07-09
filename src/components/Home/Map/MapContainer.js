@@ -410,7 +410,7 @@ class MapContainer extends Component {
 
         if (priceRange.priceMin !== '' || priceRange.priceMax !== '') {
             priceRangeParsed.push({
-                operator: '$lte',
+                operator: '$gte',
                 type: 'number',
                 key: 'priceMin',
                 value: priceRange.priceMin || 0
@@ -419,7 +419,7 @@ class MapContainer extends Component {
 
         if (priceRange.priceMax !== '') {
             priceRangeParsed.push({
-                operator: '$gte',
+                operator: '$lte',
                 type: 'number',
                 key: 'priceMax',
                 value: priceRange.priceMax

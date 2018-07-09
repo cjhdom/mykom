@@ -23,7 +23,7 @@ class ImageSwiperContainer extends Component {
                 )
             },
             infinite: false,
-            speed: 1000,
+            speed: 500,
             slidesToShow: 1,
             slidesToScroll: 1,
             lazyLoad: false,
@@ -31,7 +31,8 @@ class ImageSwiperContainer extends Component {
             adaptiveHeight: false,
             swipeToSlide: true,
             initialSlide: 0, //pageNo || index || 0, 요청에 의한 삭제
-            afterChange: ((i) => this.props.setImageIndex(i)).bind(this)
+            afterChange: ((i) => this.props.setImageIndex(i)).bind(this),
+            touchThreshold: 1
         };
         if (imageList.length > 0) {
             return (

@@ -523,7 +523,7 @@ class MapContainer extends Component {
         const {setAddress, address} = this.props
         return (
             <div id="map_canvas"
-                 style={{top: '53px', overflow: 'hidden'}}>
+                 style={{top: '53px', overflow: 'hidden', position: 'static'}}>
 
                 <div id="map" align="absmiddle"
                      style={{

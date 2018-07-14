@@ -40,9 +40,7 @@ class DescContainer extends Component {
 
                 {kosiwonBlogUrl && <Fragment>
                     <div className="road_view" onClick={goBlog}>
-                        <img src="/img/red.png" align="absmiddle" width="18px" height="30px"
-                             style={{marginTop: '1px', verticalAlign: 'top'}}/> &nbsp;&nbsp;<span
-                        style={{fontSize: '12px'}}><font color="red">블로그 리뷰</font></span>
+                        <span style={{fontSize: '12px'}}>블로그 리뷰</span>
                     </div>
                     <div className="road_view_under"/>
                 </Fragment>}

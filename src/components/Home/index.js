@@ -14,7 +14,8 @@ import {connect} from "react-redux";
 
 const checkIsAllSelected = original => every(original)
 const getStyle = anyBool => ({
-    display: anyBool ? 'block' : 'none'
+    display: anyBool ? 'block' : 'none',
+    position: 'fixed'
 })
 
 class Home extends Component {

@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 
 class ImageSwiperContainer extends Component {
     render() {
-        const {imageList, id, pageNo, index} = this.props
+        const {imageList, id, pageNo, index, priority} = this.props
         let {routeTo} = this.props
 
         if (!routeTo) {
@@ -36,9 +36,10 @@ class ImageSwiperContainer extends Component {
             draggable: false
         };
         if (imageList.length > 0) {
+            const newImageList = priority < 5 ? imageList.slice(0, 5) : imageList
             return (
                 <ImageView settings={settings}
-                           imageList={imageList}
+                           imageList={newImageList}
                            id={id}
                            routeTo={routeTo}/>
             )

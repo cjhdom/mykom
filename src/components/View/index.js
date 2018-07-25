@@ -133,7 +133,8 @@ class View extends Component {
                 intro,
                 kosiwonPhoneNo,
                 kosiwonVirtualNo,
-                kosiwonBlogUrl
+                kosiwonBlogUrl,
+                priority
             } = this.props.data
             return (
                 <Fragment>
@@ -202,7 +203,8 @@ class View extends Component {
                             <ImageSwiperContainer imageList={imageList}
                                                   routeTo={routeTo}
                                                   id={_id}
-                                                  index={index}/>
+                                                  index={index}
+                                                  priority={priority}/>
                             <NameTagContainer kosiwonName={kosiwonName}
                                               priceMin={priceMin}
                                               priceMax={priceMax}

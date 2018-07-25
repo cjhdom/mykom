@@ -8,8 +8,9 @@ class ViewImageContainer extends Component {
 
     render() {
         const {id, pageNo} = this.props.match.params
-        const {imageList, _id} = this.props.data
+        const {imageList, _id, priority} = this.props.data
         if (id === _id) {
+            const newImageList = priority < 5 ? imageList.slice(0, 5) : imageList
             return (
                 <div className="pane" style={{
                     background: 'rgb(0, 0, 0)',
@@ -22,7 +23,7 @@ class ViewImageContainer extends Component {
                         <img src="/img/close.png" align="absmiddle" width="100%"/>
                     </div>
                     <div style={{position: 'relative', top: '50%', transform: 'translateY(-50%)'}}>
-                        <ImageSwiperContainer imageList={imageList}
+                        <ImageSwiperContainer imageList={newImageList}
                                               pageNo={pageNo}/>
                     </div>
                 </div>
